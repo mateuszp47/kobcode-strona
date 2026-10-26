@@ -14,3 +14,16 @@
 @media(prefers-reduced-motion:no-preference){.hero-copy{animation:studio-in .6s ease-out both}.studio-visual{animation:studio-in .8s ease-out both}.demo-site,.demo-app{transition:transform .4s ease}.studio-visual:hover .demo-site{transform:rotate(-3deg) translateY(-3px)}.studio-visual:hover .demo-app{transform:rotate(2deg) translateY(3px)}.brand-project .catalog-art{transition:transform .3s ease}.brand-project:hover .catalog-art{transform:rotate(-2deg)}@keyframes studio-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}}
 
 .service-brief{background:#eaeef4;border-radius:12px;padding:40px;margin-top:55px}.service-brief h2{font-size:36px;margin-top:20px}.service-brief>p{max-width:750px;color:var(--muted);font-size:16px}.brief-columns{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px}.brief-columns h3{font-weight:500;font-size:21px}.brief-columns p{color:var(--muted);font-size:14px}@media(max-width:680px){.service-brief{padding:26px}.service-brief h2{font-size:30px}.brief-columns{grid-template-columns:1fr;gap:10px}}
+
+/* Real screenshots retain the full, uncropped viewport. */
+.project-art-real{height:auto!important;min-height:315px;padding:30px 22px;overflow:visible}
+.screenshot-frame{display:block;position:relative;border-radius:10px;overflow:hidden;background:#fff;border:1px solid #d3dbe7;box-shadow:0 12px 28px #14213912;color:var(--ink);text-decoration:none}
+.screenshot-frame img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain}
+.screenshot-chrome{height:32px;display:flex;align-items:center;gap:4px;padding:0 12px;background:#eff2f7;border-bottom:1px solid #dce2ec}
+.screenshot-chrome>i{height:5px;width:5px;background:#a6b2c3;border-radius:50%}.screenshot-chrome>span{margin:auto;font-size:9px;color:#4d5d74}
+.screenshot-chrome>b{font-size:14px;font-weight:400}.screenshot-open{display:flex;justify-content:space-between;padding:10px 14px;font-size:10px;background:#fff;border-top:1px solid #e4e9f1;color:#40536d}
+.screenshot-frame:hover .screenshot-open{background:#edf2ff;color:#2143ba}.screenshot-frame:focus-visible{outline:3px solid var(--blue);outline-offset:5px}
+.project-info .text-link{font-size:12px;margin-top:20px}.case-preview{padding-block:55px;border-top:1px solid var(--line);scroll-margin-top:30px}
+.case-heading{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:end;margin-bottom:30px}.case-heading h2{font-size:38px;margin:14px 0 0}.case-heading p{font-size:15px;color:var(--muted);margin:0;max-width:520px}
+.case-preview>.screenshot-frame{max-width:1050px;margin-inline:auto}.case-preview>.screenshot-frame img{max-height:none}.case-gallery{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-top:28px}.case-gallery figure{margin:0;min-width:0}.case-gallery figcaption{font-size:13px;line-height:1.6;color:var(--muted);padding:14px 2px}
+@media(max-width:680px){.project-art-real{min-height:0;padding:23px 16px}.screenshot-chrome>span{font-size:8px}.case-heading{grid-template-columns:1fr;gap:18px}.case-heading h2{font-size:30px}.case-heading p{font-size:14px}.case-gallery{grid-template-columns:1fr}.case-preview{padding-block:35px}.screenshot-open{font-size:10px}}
