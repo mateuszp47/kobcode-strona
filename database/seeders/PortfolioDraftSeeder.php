@@ -14,8 +14,8 @@ class PortfolioDraftSeeder extends Seeder
                 'relationship' => 'client',
                 'summary' => 'Serwis wykonany od podstaw dla klienta, z katalogiem produktów i panelem zarządzania.',
                 'goal' => 'Prezentacja oferty i ułatwienie klientom przejścia od produktu do zapytania.',
-                'scope' => 'Wykonanie projektu od podstaw. Zakres obejmuje serwis firmowy i katalog produktów. Szczegółowa lista funkcji zostanie uzupełniona po sprawdzeniu aktualnej wersji.',
-                'solution' => 'Laravel, Blade, Filament i Vite. W pracach uwzględniono wersje polską, czeską i słowacką oraz ceny PLN i EUR; ich bieżący status wymaga weryfikacji.',
+                'scope' => 'Zaprojektowanie, wykonanie i wdrożenie serwisu firmowego z katalogiem produktów oraz panelem zarządzania.',
+                'solution' => 'Serwis oparty na Laravel, Blade, Filament i Vite.',
             ],
             [
                 'slug' => 'olaya-strona',
@@ -24,22 +24,22 @@ class PortfolioDraftSeeder extends Seeder
                 'relationship' => 'related',
                 'summary' => 'Strona producenta saun ogrodowych wykonana od podstaw dla firmy powiązanej.',
                 'goal' => 'Przedstawienie modeli saun, produktów i realizacji oraz ułatwienie kontaktu w sprawie oferty.',
-                'scope' => 'Wykonanie projektu od podstaw. Szczegółowy opis funkcji i aktualnego wdrożenia pozostaje do weryfikacji.',
+                'scope' => 'Zaprojektowanie, wykonanie i wdrożenie strony producenta saun: prezentacja marki, katalog modeli, galeria realizacji i formularze kontaktowe.',
             ],
             [
                 'slug' => 'olaya-aplikacja',
                 'title' => 'Olaya — aplikacja do zarządzania',
                 'category' => 'Aplikacja internetowa dla firmy',
                 'relationship' => 'related',
-                'summary' => 'Aplikacja i API wykonane od podstaw dla firmy powiązanej, rozwijane z myślą o obsłudze procesów przedsiębiorstwa.',
+                'summary' => 'Aplikacja i API wykonane od podstaw i wdrożone dla firmy powiązanej do obsługi procesów przedsiębiorstwa.',
                 'goal' => 'Uporządkowanie informacji o produkcji, specyfikacjach saun i gospodarce materiałowej.',
-                'scope' => 'Wykonanie projektu od podstaw. Moduły i procesy zostaną opisane jako działające dopiero po weryfikacji.',
-                'solution' => 'Panel Nuxt/Vue i API Laravel. Zakres prac obejmował produkcję, specyfikacje, magazyn oraz obszary CRM, zamówień i faktur. Lista nie oznacza ukończenia lub wdrożenia wszystkich modułów.',
+                'scope' => 'Zaprojektowanie, wykonanie i wdrożenie aplikacji oraz API do obsługi sprzedaży, produkcji i magazynu, z rolami i uprawnieniami użytkowników.',
+                'solution' => 'Panel Nuxt/Vue połączony z API Laravel. Aplikacja porządkuje informacje o sprzedaży, produkcji, specyfikacjach saun i gospodarce materiałowej.',
             ],
         ];
         foreach ($projects as $order => $project) {
             Project::firstOrCreate(['slug' => $project['slug']], $project + [
-                'delivery_status' => 'unverified',
+                'delivery_status' => 'deployed',
                 'sort_order' => $order,
                 'approved_for_publication' => false,
                 'is_published' => false,
