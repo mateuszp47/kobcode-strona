@@ -12,3 +12,6 @@ Route::view('/kontakt', 'contact')->name('contact');
 
 Route::post('/kontakt', [\App\Http\Controllers\ContactController::class, 'store'])->middleware('throttle:5,10')->name('contact.store');
 Route::view('/polityka-prywatnosci', 'privacy')->name('privacy');
+
+Route::get('/robots.txt', [\App\Http\Controllers\SeoController::class, 'robots'])->name('robots');
+Route::get('/sitemap.xml', [\App\Http\Controllers\SeoController::class, 'sitemap'])->name('sitemap');
