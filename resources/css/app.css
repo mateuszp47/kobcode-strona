@@ -80,3 +80,7 @@ figure.screenshot-frame{margin:0;cursor:default}
 .case-gallery figcaption.screenshot-chrome{padding:0 12px;font-size:10px;line-height:1.2;color:#4d5d74}
 figcaption.screenshot-chrome>span{min-width:0;text-align:center;overflow-wrap:anywhere}
 @media(max-width:680px){.header .site-logo{font-size:30px}.footer .site-logo{font-size:28px;grid-column:auto}.screenshot-chrome{min-height:32px;height:auto;padding-block:8px}.case-gallery figcaption.screenshot-chrome{padding:8px 12px}}
+
+/* Original logo mark, sized independently from the wordmark. */
+.site-logo{gap:4px}
+.site-logo-registered{align-self:flex-start;display:block;font-family:Arial,Helvetica,sans-serif;font-size:.35em;font-weight:400;line-height:1;letter-spacing:0;color:var(--ink);margin:2px 0 0;padding:0}
