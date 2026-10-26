@@ -9,7 +9,7 @@ class ScreenshotPresentationTest extends TestCase
     {
         $this->withoutVite();
         $response = $this->get('/realizacje')->assertOk();
-        foreach (['olaya-home','olaya-catalog','olaya-projects','olaya-app-sales'] as $image) {
+        foreach (['cermax-home','cermax-catalog','cermax-b2b','olaya-home','olaya-catalog','olaya-projects','olaya-app-sales'] as $image) {
             $response->assertSee($image.'-800.webp')->assertSee($image.'-1600.webp');
             $this->assertFileExists(public_path('images/portfolio/'.$image.'-800.webp'));
             $this->assertFileExists(public_path('images/portfolio/'.$image.'-1600.webp'));
@@ -17,7 +17,7 @@ class ScreenshotPresentationTest extends TestCase
         $this->get('/realizacje/olaya-strona')->assertNotFound();
         $response->assertDontSee('Materiały projektowe pojawią się')->assertDontSee('walbud-home-800.webp');
         $html = $response->getContent();
-        foreach (['cermax', 'parkstop', 'walbud'] as $id) {
+        foreach (['parkstop', 'walbud'] as $id) {
             $section = explode('</section>', explode('id="'.$id.'"', $html)[1])[0];
             $this->assertStringNotContainsString('<img', $section);
         }

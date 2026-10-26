@@ -28,8 +28,11 @@ Frontend production build and browser review of rendered visual fixtures; Larave
 Client screenshots remain static; no enlargement or source-image links. Application screenshot is explicitly demonstration data. Existing contact configuration, storage behavior and publication gates remain in place. Email/phone and final privacy information still require confirmation before public launch. No production deployment is part of this branch.
 
 ## Portfolio hierarchy update
-Order: Cermax B2B, Olaya website + application, ParkStop, Walbud. Cermax and Olaya have extended presentations. ParkStop and Walbud use concise text sections. No new screenshots or synthetic application mockups; existing Olaya screenshots retained.
+Order: Cermax B2B, Olaya website + application, ParkStop, Walbud. Cermax and Olaya have extended presentations. ParkStop and Walbud use concise text sections. Existing Olaya screenshots retained; no synthetic application mockups.
 
 Cermax evidence: public HTML and its public Nuxt catalog, homepage, navigation, cart and Polish UI resources retrieved from https://b2b-cermax.pl/ on 2026-10-26. Catalog search matches names, SKU and EAN; categories narrow series results. Public UI describes company-specific prices, variants, stock and orders after login. Cart redirects to the associated B2B platform. Authenticated customer data and completed orders were not accessed or tested. Do not imply a specific backend technology, automatic invoicing, ERP integration or payment features from this review.
 
 ParkStop evidence: https://parkstop.pl/ public reservation fields for outbound/return dates and times, pricing, transfer information, FAQ and directions. The site currently displays a closure notice. Portfolio describes the delivered website rather than current parking availability. Attribution to KOBCODE is based on the owner's statement; no client testimonials or business performance figures are reused.
+
+## Cermax public screenshots
+Owner-supplied image(8).png (catalog), image(9).png (homepage), image(10).png (public B2B information), received 2026-10-26. Optimized to 800/1600px WebP variants without changing screenshot contents. Homepage leads the home-page project preview; catalog and B2B information form the supporting case gallery. Captions explicitly identify the public interface. No authenticated account or cart screenshot is represented. Images remain static and do not enlarge.
