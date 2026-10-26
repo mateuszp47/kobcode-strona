@@ -12,6 +12,6 @@ class PresentationTest extends TestCase
             $this->assertStringNotContainsString('Radom', $beforeFooter);
             $response->assertSee('26-600 Radom');
         }
-        $this->get('/')->assertSee('Walbud / Walbud24')->assertSee('Olaya')->assertSee('olaya-home-800.webp')->assertSee('CAŁA POLSKA');
+        $this->get('/')->assertSee('Walbud / Walbud24')->assertSee('Olaya')->assertSee('olaya-home-800.webp')->assertSee('CAŁEJ POLSKI');
     }
 }

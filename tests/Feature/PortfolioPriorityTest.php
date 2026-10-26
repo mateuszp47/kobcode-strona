@@ -12,7 +12,7 @@ class PortfolioPriorityTest extends TestCase
             $html = $this->get($url)->assertOk()->getContent();
             $this->assertLessThan(strpos($html, 'Walbud / Walbud24'), strpos($html, 'Olaya — aplikacja'));
             $this->assertLessThan(strpos($html, 'Olaya — aplikacja'), strpos($html, 'olaya-home-800.webp'));
-            $this->assertStringContainsString('SCHEMAT OBSZARÓW PROJEKTU', $html);
+            $this->assertStringContainsString('olaya-app-sales-800.webp', $html);
             $this->assertStringNotContainsString('image(6)', $html);
         }
     }
