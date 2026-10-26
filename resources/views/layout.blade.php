@@ -10,5 +10,5 @@
 <button class="menu" aria-expanded="false" aria-controls="nav">Menu <span>☰</span></button>
 <nav id="nav" aria-label="Główna nawigacja"><a href="{{ route('home') }}#uslugi">Usługi</a><a href="{{ route('portfolio') }}">Realizacje</a><a href="{{ route('about') }}">O nas</a><a class="nav-cta" href="{{ route('contact') }}">Porozmawiajmy <span>↗</span></a></nav></header>
 <main id="main">@yield('content')</main>
-<footer class="wrap footer"><a class="logo" href="{{ route('home') }}">kobcode<span>®</span></a><p>KOBCODE sp. z o.o.<br>ul. Żurawia 11, 26-600 Radom</p><p>NIP 9482601374<br>KRS 0000512381 · REGON 147266793</p><span>© {{ date('Y') }} KOBCODE</span></footer>
+<footer class="wrap footer"><a class="logo" href="{{ route('home') }}">kobcode<span>®</span></a><p>KOBCODE sp. z o.o.<br>ul. Żurawia 11, 26-600 Radom</p><p>NIP 9482601374<br>KRS 0000512381 · REGON 147266793</p><a href="{{ route('privacy') }}">Prywatność</a><span>© {{ date('Y') }} KOBCODE</span></footer>
 </body></html>

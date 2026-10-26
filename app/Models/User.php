@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements \Filament\Models\Contracts\FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -22,10 +22,16 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        return $this->is_admin === true;
+    }
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
+            'is_admin' => 'boolean',
             'password' => 'hashed',
         ];
     }

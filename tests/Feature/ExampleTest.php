@@ -1,8 +1,10 @@
 <?php
 namespace Tests\Feature;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_public_pages_render_without_unverified_contact_details(): void
     {
         $this->withoutVite();

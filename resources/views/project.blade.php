@@ -1,0 +1,6 @@
+@extends('layout')
+@section('title', $project->seo_title ?: $project->title.' — KOBCODE')
+@section('description', $project->seo_description ?: $project->summary)
+@section('content')<article class="wrap section page"><a class="text-link" href="{{ route('portfolio') }}">← Wszystkie realizacje</a><h1>{{ $project->title }}</h1><p class="lead">{{ $project->summary }}</p><p>{{ $project->relationship === 'own' ? 'Projekt własny' : 'Projekt dla klienta' }} · {{ $project->delivery_status === 'deployed' ? 'Wdrożony' : 'W rozwoju' }}</p>
+@if($project->cover)<img class="project-cover" src="{{ Storage::disk('public')->url($project->cover) }}" alt="{{ $project->cover_alt }}" width="1200" height="800">@endif
+<div class="prose">@foreach(['goal'=>'Cel projektu','problem'=>'Problem','scope'=>'Zakres naszej pracy','solution'=>'Rozwiązanie','result'=>'Rezultat'] as $field=>$label)@if($project->$field)<section><h2>{{ $label }}</h2><p class="preserve-lines">{{ $project->$field }}</p></section>@endif @endforeach</div><a class="button" href="{{ route('contact') }}">Porozmawiajmy o podobnym rozwiązaniu ↗</a></article>@endsection
