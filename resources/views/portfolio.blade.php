@@ -1,0 +1,3 @@
+@extends('layout')
+@section('title', 'Realizacje — KOBCODE')
+@section('content')<section class="wrap section page"><span class="eyebrow">PORTFOLIO</span><h1>Cel. Rozwiązanie.<br>Efekt pracy.</h1><p class="lead">Przygotowujemy opisy realizacji wraz z prezentacją zakresu prac i zastosowanych rozwiązań.</p><p>Materiały projektowe pojawią się po zakończeniu ich weryfikacji i zatwierdzeniu do publikacji.</p><a class="button" href="{{ route('contact') }}">Porozmawiajmy o Twoim projekcie ↗</a></section>@endsection

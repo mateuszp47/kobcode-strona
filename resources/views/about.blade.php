@@ -1,0 +1,3 @@
+@extends('layout')
+@section('title', 'O firmie — KOBCODE Radom')
+@section('content')<section class="wrap section page"><span class="eyebrow">O KOBCODE</span><h1>Z Radomia.<br>Dla Twojej firmy.</h1><p class="lead">KOBCODE sp. z o.o. zajmuje się tworzeniem stron internetowych i oprogramowania internetowego dla firm.</p><div class="prose"><h2>Rozwiązanie zaczyna się od zrozumienia.</h2><p>Chcemy wiedzieć, kto będzie korzystał ze strony lub aplikacji, co ma w niej zrobić i jaki problem ma ona rozwiązać. To punkt wyjścia do określenia zakresu i projektu.</p><p>Współpracujemy z firmami z całej Polski. Rozmowę o projekcie możemy rozpocząć zdalnie.</p></div><a class="button" href="{{ route('contact') }}">Poznajmy Twój projekt ↗</a></section>@endsection
