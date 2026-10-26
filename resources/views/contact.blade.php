@@ -1,9 +1,11 @@
 @extends('layout')
 @section('title', 'Kontakt — KOBCODE')
-@section('content')<section class="wrap section page"><span class="eyebrow">KONTAKT</span><h1>Porozmawiajmy<br>o Twoim projekcie.</h1><p class="lead">Napisz, czego potrzebujesz: strony firmowej, katalogu produktów czy aplikacji dla zespołu. Wystarczy krótki opis — szczegóły ustalimy podczas rozmowy.</p>
-@if(config('site.email'))<a class="button" href="mailto:{{ config('site.email') }}">{{ config('site.email') }} ↗</a>@elseif(!config('site.contact_enabled'))<p class="notice">Formularz kontaktowy jest obecnie niedostępny.</p>@endif
-@if(config('site.phone'))<p><a href="tel:{{ preg_replace('/[^+0-9]/', '', config('site.phone')) }}">{{ config('site.phone') }}</a></p>@endif
-
+@section('content')
+<section class="wrap section page"><span class="eyebrow">KONTAKT</span><h1>Twój projekt<br><span>zaczyna się tutaj.</span></h1><p class="lead">Potrzebujesz strony internetowej lub aplikacji? Napisz, czym zajmuje się Twoja firma i co chcesz stworzyć.</p>
+<div class="contact-layout"><aside class="contact-aside"><span class="eyebrow">NA POCZĄTEK WYSTARCZY</span><h2>Kilka słów<br>o Twojej firmie.</h2><ol><li>Co oferujesz i kto jest Twoim odbiorcą?</li><li>Co ma ułatwić strona lub aplikacja?</li><li>Co jest dla Ciebie najważniejsze na start?</li></ol><p>Nie potrzebujesz gotowej specyfikacji. Ustalimy szczegóły podczas rozmowy.</p>
+@if(config('site.email'))<a class="text-link" href="mailto:{{ config('site.email') }}">{{ config('site.email') }} ↗</a>@endif
+@if(config('site.phone'))<a class="text-link" href="tel:{{ preg_replace('/[^+0-9]/', '', config('site.phone')) }}">{{ config('site.phone') }}</a>@endif
+</aside><div class="contact-form-area">
 @if(session('success'))<p role="status" class="notice">{{ session('success') }}</p>@endif
 @if(config('site.contact_enabled'))
 <form class="contact-form" method="post" action="{{ route('contact.store') }}">
@@ -16,4 +18,7 @@
 <p class="full">Dane wykorzystamy do obsługi zapytania. <a class="text-link" href="{{ route('privacy') }}">Informacje o prywatności</a>.</p><button class="button" type="submit">Wyślij zapytanie ↗</button>
 </form>
 @endif
-<div class="prose"><h2>KOBCODE sp. z o.o.</h2><p>Współpracujemy z firmami z całej Polski. Rozmowę o projekcie możemy rozpocząć zdalnie.</p><p>NIP 9482601374<br>KRS 0000512381</p></div></section>@endsection
+
+@if(!config('site.contact_enabled'))<div class="contact-unavailable"><span class="eyebrow">KONTAKT</span><h2>Formularz jest<br>obecnie niedostępny.</h2>@if(config('site.email'))<p>Napisz bezpośrednio na podany adres e-mail.</p>@else<p>Dane kontaktowe pojawią się po uruchomieniu tej części serwisu.</p>@endif</div>@endif
+</div></div></section>
+@endsection

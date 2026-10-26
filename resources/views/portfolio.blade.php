@@ -1,8 +1,8 @@
 @extends('layout')
 @section('title', 'Realizacje — KOBCODE')
 @section('content')
-<section class="wrap section page"><span class="eyebrow">PORTFOLIO / STRONY I APLIKACJE</span><h1>Strony i aplikacje,<br><span>które tworzymy.</span></h1>
-<p class="lead">Zobacz stronę producenta saun Olaya oraz osobną aplikację do zarządzania firmą. Oba projekty wykonaliśmy od podstaw. Na końcu prezentujemy serwis Walbud/Walbud24.</p>
+<section class="wrap section page"><span class="eyebrow">PORTFOLIO / STRONY I APLIKACJE</span><h1>Projekty, za którymi<br><span>stoi nasz kod.</span></h1>
+<p class="lead">Zobacz stronę producenta saun Olaya oraz osobną aplikację do zarządzania firmą. Oba projekty wykonaliśmy od podstaw.</p>
 
 <section class="case-preview" id="olaya"><div class="case-heading"><div><span class="eyebrow">FIRMA POWIĄZANA · OD PODSTAW</span><h2>Olaya — strona producenta</h2></div><p>Strona producenta saun ogrodowych. Prezentacja marki, katalog modeli oraz galeria realizacji.</p></div>
 @include('partials.project-screenshot', ['image'=>'olaya-home','alt'=>'Olaya — strona główna z prezentacją producenta i zdjęciem sauny','caption'=>'Olaya · strona główna'])
