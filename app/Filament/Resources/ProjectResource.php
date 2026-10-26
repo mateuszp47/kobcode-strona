@@ -17,8 +17,8 @@ class ProjectResource extends Resource {
             TextInput::make('slug')->label('Adres URL')->required()->regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/')->unique(ignoreRecord:true)->maxLength(255),
             TextInput::make('category')->label('Rodzaj rozwiązania')->required()->maxLength(255),
             Textarea::make('summary')->label('Krótki opis')->required()->maxLength(1000),
-            Select::make('relationship')->label('Relacja z projektem')->options(['unverified'=>'Do ustalenia','own'=>'Projekt własny','client'=>'Projekt dla klienta'])->required(),
-            Select::make('delivery_status')->label('Stan projektu')->options(['in_development'=>'W rozwoju','deployed'=>'Wdrożony'])->required(),
+            Select::make('relationship')->label('Relacja z projektem')->options(['unverified'=>'Do ustalenia','related'=>'Firma powiązana','own'=>'Projekt własny','client'=>'Projekt dla klienta'])->required(),
+            Select::make('delivery_status')->label('Stan projektu')->options(['unverified'=>'Do potwierdzenia','in_development'=>'W rozwoju','deployed'=>'Wdrożony'])->required(),
             Textarea::make('goal')->label('Cel projektu')->maxLength(10000),
             Textarea::make('problem')->label('Problem')->maxLength(10000),
             Textarea::make('scope')->label('Zakres naszej pracy')->maxLength(10000),
@@ -30,7 +30,7 @@ class ProjectResource extends Resource {
             Textarea::make('seo_description')->label('Opis SEO')->maxLength(320),
             TextInput::make('sort_order')->label('Kolejność')->numeric()->minValue(0)->default(0)->required(),
             Toggle::make('approved_for_publication')->label('Potwierdzono autorstwo, treści i prawa do materiałów')->default(false),
-            Toggle::make('is_published')->label('Opublikuj')->helperText('Publikacja wymaga powyższego potwierdzenia i ustalenia relacji z projektem.')->default(false),
+            Toggle::make('is_published')->label('Opublikuj')->helperText('Publikacja wymaga powyższego potwierdzenia i ustalenia relacji z projektem. Zgoda na markę nie potwierdza wdrożenia wszystkich funkcji.')->default(false),
         ]);
     }
     public static function table(Table $table): Table {

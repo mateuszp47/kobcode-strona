@@ -13,3 +13,8 @@ Artisan::command('kobcode:admin', function () {
     $user->is_admin = true; $user->save();
     $this->info('Konto utworzone. Zaloguj się na /admin.');
 })->purpose('Utwórz administratora KOBCODE bez domyślnego hasła');
+
+Artisan::command('kobcode:portfolio-drafts', function () {
+    $this->call('db:seed', ['--class' => \Database\Seeders\PortfolioDraftSeeder::class]);
+    $this->info('Szkice przygotowane. Istniejące opisy nie zostały nadpisane.');
+})->purpose('Dodaj brakujące szkice Walbud i Olaya bez publikowania');

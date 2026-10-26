@@ -43,7 +43,7 @@ Panel Filament: edycja realizacji, cel/problem/zakres/rozwiązanie/rezultat, zdj
 
 Projekt pojawia się publicznie po ustaleniu relacji własny/kliencki, potwierdzeniu praw i treści oraz włączeniu publikacji. Pliki na dysku publicznym są dostępne po URL także dla szkiców — wgrywaj wyłącznie zatwierdzone materiały, nigdy poufne ekrany.
 
-Walbud i Olaya czekają na potwierdzenie autorstwa, zakresu, relacji własny/kliencki, statusu wdrożeń i praw do materiałów. Nie publikujemy fikcyjnych rezultatów ani opinii.
+Walbud to projekt dla klienta, Olaya to firma powiązana; wszystkie trzy rozwiązania wykonano od podstaw. Użytkownik zezwolił na nazwy, logotypy i zatwierdzone zrzuty. Do sprawdzenia pozostają status wdrożeń, szczegółowe funkcje i rezultaty. Szkice dodasz komendą `php artisan kobcode:portfolio-drafts`; szczegóły w docs/PORTFOLIO.md. Nie publikujemy fikcyjnych rezultatów ani opinii.
 
 ## Formularz
 

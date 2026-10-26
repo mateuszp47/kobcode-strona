@@ -7,11 +7,11 @@ class Project extends Model
     protected $guarded = ['id'];
     protected function casts(): array { return ['is_published'=>'boolean', 'approved_for_publication'=>'boolean']; }
     public function scopePublished(Builder $query): Builder {
-        return $query->where('is_published', true)->where('approved_for_publication', true)->whereIn('relationship', ['client', 'own']);
+        return $query->where('is_published', true)->where('approved_for_publication', true)->whereIn('relationship', ['client', 'own', 'related']);
     }
     protected static function booted(): void {
         static::saving(function (Project $project) {
-            if (! $project->approved_for_publication || ! in_array($project->relationship, ['client','own'])) {
+            if (! $project->approved_for_publication || ! in_array($project->relationship, ['client','own','related'])) {
                 $project->is_published = false;
             }
         });
