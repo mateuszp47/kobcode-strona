@@ -11,7 +11,7 @@ for(const switcher of document.querySelectorAll('[data-projects]')){
  const panels=[...switcher.querySelectorAll('[data-work-panel]')];
  const select=key=>{for(const control of controls)control.setAttribute('aria-pressed',String(control.dataset.workSelect===key));for(const panel of panels)panel.hidden=panel.dataset.workPanel!==key};
  for(const control of controls)control.addEventListener('click',()=>select(control.dataset.workSelect));
- select('site');
+ select(controls.find(control=>control.getAttribute('aria-pressed')==='true')?.dataset.workSelect??controls[0]?.dataset.workSelect);
 }
 if('IntersectionObserver' in window&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
  const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}}},{threshold:.08});

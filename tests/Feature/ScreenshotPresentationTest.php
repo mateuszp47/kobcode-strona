@@ -9,13 +9,18 @@ class ScreenshotPresentationTest extends TestCase
     {
         $this->withoutVite();
         $response = $this->get('/realizacje')->assertOk();
-        foreach (['walbud-home','olaya-home','olaya-catalog','olaya-projects','olaya-app-sales'] as $image) {
+        foreach (['olaya-home','olaya-catalog','olaya-projects','olaya-app-sales'] as $image) {
             $response->assertSee($image.'-800.webp')->assertSee($image.'-1600.webp');
             $this->assertFileExists(public_path('images/portfolio/'.$image.'-800.webp'));
             $this->assertFileExists(public_path('images/portfolio/'.$image.'-1600.webp'));
         }
         $this->get('/realizacje/olaya-strona')->assertNotFound();
-        $response->assertDontSee('Materiały projektowe pojawią się');
+        $response->assertDontSee('Materiały projektowe pojawią się')->assertDontSee('walbud-home-800.webp');
+        $html = $response->getContent();
+        foreach (['cermax', 'parkstop', 'walbud'] as $id) {
+            $section = explode('</section>', explode('id="'.$id.'"', $html)[1])[0];
+            $this->assertStringNotContainsString('<img', $section);
+        }
     }
     public function test_walbud_alone_does_not_leave_an_empty_details_section(): void
     {
