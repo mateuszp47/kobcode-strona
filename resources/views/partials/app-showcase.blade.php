@@ -1,0 +1,5 @@
+<div class="app-showcase" aria-label="Schemat obszarów projektu aplikacji Olaya; nie jest zrzutem działającego panelu">
+    <div class="app-showcase-top"><span>OLAYA <i>/</i> APLIKACJA</span><span class="app-stack">Nuxt / Vue + Laravel</span></div>
+    <div class="app-showcase-core"><span class="eyebrow">JEDNA FIRMA. RÓŻNE PROCESY.</span><strong>Praca zespołu<br>ma swój system.</strong><div class="app-module-grid"><div><span aria-hidden="true">↗</span><b>Sprzedaż</b><small>Zapytania i oferty</small></div><div><span aria-hidden="true">⌘</span><b>Produkcja</b><small>Zlecenia i specyfikacje</small></div><div><span aria-hidden="true">▦</span><b>Magazyn</b><small>Materiały i operacje</small></div></div></div>
+    <div class="app-showcase-footer"><span>SCHEMAT OBSZARÓW PROJEKTU</span><span aria-hidden="true">&lt;/&gt;</span></div>
+</div>
