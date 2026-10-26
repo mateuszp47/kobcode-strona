@@ -36,3 +36,6 @@ ParkStop evidence: https://parkstop.pl/ public reservation fields for outbound/r
 
 ## Cermax public screenshots
 Owner-supplied image(8).png (catalog), image(9).png (homepage), image(10).png (public B2B information), received 2026-10-26. Optimized to 800/1600px WebP variants without changing screenshot contents. Homepage leads the home-page project preview; catalog and B2B information form the supporting case gallery. Captions explicitly identify the public interface. No authenticated account or cart screenshot is represented. Images remain static and do not enlarge.
+
+## Additional owner-supplied screenshots
+2026-10-26: Olaya warehouse (160945), invoices (160949), ParkStop homepage (160956), Walbud homepage (161004). Optimized from supplied PNG files to 800/1600px WebP without semantic edits. Olaya panels use demonstration-data captions. ParkStop retains the visible temporary closure notice; no current parking availability is claimed. The Walbud screenshot replaces the older asset. All previews are static.
