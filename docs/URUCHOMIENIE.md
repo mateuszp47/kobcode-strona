@@ -1,6 +1,8 @@
-# KOBCODE — pierwsza wersja
+# KOBCODE — uruchomienie i aktualizacja
 
-Wymagania: PHP 8.3+, Composer, Node zgodny z Vite 8 (20.19+ lub 22.12+), SQLite.
+Wymagania: PHP 8.3+, Composer, Node 22.12+ lub 24, SQLite.
+
+## Pierwsze uruchomienie
 
 ```sh
 composer install
@@ -8,29 +10,53 @@ cp .env.example .env
 php artisan key:generate
 touch database/database.sqlite
 php artisan migrate
-npm install
+php artisan storage:link
+npm ci
 npm run build
-php artisan serve
+php artisan kobcode:admin
+php artisan serve --port=8001
 ```
 
-Otwórz http://127.0.0.1:8000. Do edycji CSS/JS uruchom `npm run dev` w osobnym procesie.
+Panel: http://127.0.0.1:8001/admin. Konto tworzysz interaktywnie komendą kobcode:admin. Nie ma domyślnego hasła ani publicznej rejestracji.
 
-## Stan
+## Aktualizacja poprzedniej wersji
 
-Pierwsza wersja zawiera stronę główną, dwie usługi, o firmie, kontakt i stronę portfolio oczekującą na materiały. README użytkownika pozostaje zachowane.
+Zatrzymaj serwer przez Control+C. Jeśli Git zgłosi konflikt lokalnych zmian, nie nadpisuj ich.
 
-Kontakt e-mail i telefon są pobierane z SITE_CONTACT_EMAIL i SITE_CONTACT_PHONE. Pozostają puste do zatwierdzenia. Nie ma jeszcze formularza wysyłającego wiadomości ani panelu Filament. Nie publikować jako gotowej strony sprzedażowej przed ich podłączeniem.
+```sh
+git pull origin main
+composer update filament/filament --with-all-dependencies
+php artisan migrate
+php artisan storage:link
+npm ci
+npm run build
+php artisan optimize:clear
+php artisan kobcode:admin
+php artisan serve --port=8001
+```
 
-SITE_INDEXABLE=false celowo blokuje indeksowanie przez meta robots. Przed produkcją: aktualne dane spółki, zatwierdzone kontakty, materiały portfolio, SMTP i polityka prywatności dopasowana do formularza, testy mobilne/dostępności, sitemap i właściwy APP_URL/HTTPS. Zmienić SITE_INDEXABLE dopiero po gotowości.
+Komendę tworzenia administratora wykonaj tylko raz dla danego konta. Jeśli dowiązanie storage już istnieje, nie twórz go ponownie. Nie kopiuj ponownie .env i nie generuj ponownie APP_KEY.
 
-Walbud i Olaya: nieustalone autorstwo całości, relacja własny/kliencki, status wdrożeń i zgody na materiały. Nie publikować twierdzeń o funkcjach bez weryfikacji. Filament i docelowy formularz są kolejnym etapem, nie funkcją tej wersji.
+## Zakres
 
-## Aktualizacja — panel i formularz
+Panel Filament: edycja realizacji, cel/problem/zakres/rozwiązanie/rezultat, zdjęcie i jego opis, kolejność i SEO, publikacja i szkice; odczyt i usuwanie zapytań oraz oznaczanie ich jako przeczytane.
 
-Po pobraniu zmian: `composer install`, `php artisan migrate`, `php artisan storage:link`, `npm ci`, `npm run build`, `php artisan optimize:clear`. Następnie `php artisan kobcode:admin` — podaj własny e-mail i hasło. Panel: `/admin`. Nie ma domyślnego konta ani hasła.
+Projekt pojawia się publicznie po ustaleniu relacji własny/kliencki, potwierdzeniu praw i treści oraz włączeniu publikacji. Pliki na dysku publicznym są dostępne po URL także dla szkiców — wgrywaj wyłącznie zatwierdzone materiały, nigdy poufne ekrany.
 
-Panel obsługuje realizacje, zdjęcie, opis alternatywny, kolejność i SEO oraz zapytania. Realizacja pojawia się publicznie po ustaleniu relacji własny/kliencki, potwierdzeniu materiałów i włączeniu publikacji. Zdjęcia na dysku publicznym są dostępne po URL także dla szkiców — wgrywaj wyłącznie materiały już zatwierdzone, nigdy poufne ekrany.
+Walbud i Olaya czekają na potwierdzenie autorstwa, zakresu, relacji własny/kliencki, statusu wdrożeń i praw do materiałów. Nie publikujemy fikcyjnych rezultatów ani opinii.
 
-Formularz zapisuje zapytania w bazie, nie wysyła e-maili. Lokalnie włącz `SITE_CONTACT_ENABLED=true` w `.env`, następnie `php artisan config:clear`. Przed uruchomieniem publicznym uzupełnij informacje o prywatności o faktycznych dostawców, podstawy prawne, retencję i prawa osób. SITE_INDEXABLE pozostaje false.
+## Formularz
 
-Po zmianie danych kontaktowych w `.env` wyczyść cache konfiguracji. Wiadomości czytaj i usuwaj w panelu. Nie umieszczaj prawdziwych zapytań ani bazy danych w repozytorium.
+Zapytania zapisują się w bazie i są dostępne w panelu. Formularz nie wysyła powiadomień e-mail. Lokalnie dodaj w .env:
+
+```dotenv
+SITE_CONTACT_ENABLED=true
+```
+
+Potem `php artisan config:clear`. SITE_CONTACT_EMAIL i SITE_CONTACT_PHONE pozostają puste do zatwierdzenia. Przed uruchomieniem publicznym uzupełnij informacje o prywatności o dostawców, podstawy prawne, retencję i prawa osób. Obecna strona prywatności jest wersją roboczą.
+
+SITE_INDEXABLE=false pozostaw do gotowości produkcyjnej. Nie dodano analityki ani reklamowych narzędzi śledzących. Formularz ma walidację, ochronę CSRF, honeypot i limit prób. Nie umieszczaj prawdziwych zapytań ani bazy w repozytorium.
+
+## Weryfikacja
+
+GitHub Actions sprawdza instalację zależności, testy publicznych stron, publikacji i panelu oraz formularza, kompilację Blade i budowanie CSS/JS. Weryfikacja wizualna na urządzeniach pozostaje oddzielnym krokiem.
