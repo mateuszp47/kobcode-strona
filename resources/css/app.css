@@ -71,3 +71,12 @@ body{line-height:1.65}.eyebrow{font-size:11px;letter-spacing:1.1px}h1,h2,h3{text
 /* Screenshots are static previews, without zoom links or controls. */
 figure.screenshot-frame{margin:0;cursor:default}
 .case-preview>figure.screenshot-frame{margin-inline:auto}
+
+/* Isolated wordmark sizing; unrelated span and footer rules cannot shift it. */
+.site-logo{display:inline-flex;align-items:baseline;gap:6px;flex:none;white-space:nowrap;color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:34px;font-weight:800;line-height:1;text-decoration:none}
+.site-logo-word{display:block;font:inherit;letter-spacing:-2px;margin:0;padding:0}
+.site-logo-mark{display:block;color:var(--blue);font-size:1em;font-weight:400;line-height:1;letter-spacing:0;margin:0;padding:0}
+.footer .site-logo{font-size:30px}.header{gap:20px}.header nav{min-width:0}
+.case-gallery figcaption.screenshot-chrome{padding:0 12px;font-size:10px;line-height:1.2;color:#4d5d74}
+figcaption.screenshot-chrome>span{min-width:0;text-align:center;overflow-wrap:anywhere}
+@media(max-width:680px){.header .site-logo{font-size:30px}.footer .site-logo{font-size:28px;grid-column:auto}.screenshot-chrome{min-height:32px;height:auto;padding-block:8px}.case-gallery figcaption.screenshot-chrome{padding:8px 12px}}
