@@ -16,7 +16,7 @@
 <div><label for="{{ $field }}">{{ $label }}</label><input id="{{ $field }}" name="{{ $field }}" type="{{ $field === 'email' ? 'email' : ($field === 'phone' ? 'tel' : 'text') }}" autocomplete="{{ ['name'=>'given-name','email'=>'email','company'=>'organization','phone'=>'tel'][$field] }}" value="{{ old($field) }}" maxlength="{{ ['name'=>100,'email'=>255,'company'=>150,'phone'=>40][$field] }}" @required(in_array($field, ['name','email'])) @if($errors->has($field)) aria-invalid="true" aria-describedby="{{ $field }}-error" @endif>@error($field)<p class="form-error" id="{{ $field }}-error">{{ $message }}</p>@enderror</div>@endforeach
 <div class="full"><label for="message">Opisz swój projekt</label><textarea id="message" name="message" rows="6" required minlength="10" maxlength="5000" @if($errors->has('message')) aria-invalid="true" aria-describedby="message-error" @endif>{{ old('message') }}</textarea>@error('message')<p class="form-error" id="message-error">{{ $message }}</p>@enderror</div>
 <div class="honeypot" aria-hidden="true"><label for="website">Zostaw puste</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
-<p class="full">Dane wykorzystamy do obsługi zapytania. <a class="text-link" href="{{ route('privacy') }}">Informacje o prywatności</a>.</p><button class="button" type="submit">Wyślij zapytanie ↗</button>
+<p class="full">Administratorem danych jest KOBCODE sp. z o.o. Dane wykorzystamy do odpowiedzi na zapytanie i przygotowania oferty; szczegóły dotyczące podstaw prawnych, przechowywania i Twoich praw opisuje polityka prywatności. <a class="text-link" href="{{ route('privacy') }}">Informacje o prywatności</a>.</p><button class="button" type="submit">Wyślij zapytanie ↗</button>
 </form>
 @endif
 
