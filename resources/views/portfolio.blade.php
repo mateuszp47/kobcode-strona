@@ -3,7 +3,7 @@
 @section('description', 'Zobacz realizacje KOBCODE: platformę Cermax B2B, stronę i aplikację Olaya, serwis ParkStop oraz katalog Walbud. Poznaj zakres i działanie rozwiązań.')
 @section('content')
 <section class="wrap section page"><span class="eyebrow">PORTFOLIO / STRONY I APLIKACJE</span><h1>Projekty, za którymi<br><span>stoi nasz kod.</span></h1>
-<p class="lead">Platforma zakupowa Cermax, strona i panel Olaya, serwis parkingu ParkStop oraz katalog Walbud. Każda realizacja odpowiada na inny sposób pracy z klientem.</p>
+<p class="lead">Strony internetowe, aplikacje i systemy tworzone dla różnych branż. Zobacz, jak przekładamy potrzeby firm na rozwiązania do prezentacji oferty, obsługi klientów i codziennej pracy.</p>
 
 <nav class="portfolio-index" aria-label="Realizacje"><a href="#cermax"><span>01</span>Cermax B2B</a><a href="#olaya"><span>02</span>Olaya: strona i panel</a><a href="#parkstop"><span>03</span>ParkStop</a><a href="#walbud"><span>04</span>Walbud / Walbud24</a></nav>
 <section class="case-preview cermax-case" id="cermax"><div class="case-heading"><div><span class="eyebrow">01 / CERMAX · PLATFORMA B2B</span><h2>Hurtowe zakupy<br>z warunkami dla konkretnej firmy.</h2></div><p>Wdrożony serwis Cermax łączy publiczny katalog donic, osłonek i dekoracji z platformą zamówień dla sklepów i centrów ogrodniczych. Klient może poznać ofertę bez konta, a po zalogowaniu sprawdzić swoje ceny i kupić wybrane produkty.</p></div>
