@@ -18,6 +18,6 @@
 <main id="main">@yield('content')</main>
 <footer class="site-footer"><div class="wrap">
 <div class="footer-top"><a class="site-logo" href="{{ route('home') }}" aria-label="KOBCODE — strona główna">kobcode<span class="site-logo-registered" aria-hidden="true">®</span></a><p>Projektujemy i tworzymy<br>oprogramowanie na zamówienie.</p><div class="footer-links"><a href="{{ route('web') }}">Strony internetowe</a><a href="{{ route('apps') }}">Aplikacje i integracje</a><a href="{{ route('portfolio') }}">Realizacje</a><a href="{{ route('contact') }}">Kontakt ↗</a><a href="{{ route('privacy') }}">Prywatność</a></div></div>
-<div class="footer-bottom"><p>KOBCODE sp. z o.o.<br>ul. Żurawia 11, 26-600 Radom</p><p>NIP 9482601374<br>KRS 0000512381 · REGON 147266793</p><span>© {{ date('Y') }} KOBCODE</span><a href="#main">Wróć na górę ↑</a></div>
+<div class="footer-bottom" id="dane-spolki"><p>KOBCODE sp. z o.o.<br>ul. Żurawia 11, 26-600 Radom</p><p>NIP 9482601374<br>KRS 0000512381 · REGON 147266793</p><span>© {{ date('Y') }} KOBCODE</span><a href="#main">Wróć na górę ↑</a></div>
 </div></footer>
 </body></html>
