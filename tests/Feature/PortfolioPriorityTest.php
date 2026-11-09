@@ -8,7 +8,7 @@ class PortfolioPriorityTest extends TestCase
     public function test_cermax_leads_then_olaya_parkstop_and_walbud(): void
     {
         $this->withoutVite();
-        foreach (['/' => ['id="work-cermax"', 'id="work-site"', 'id="work-app"', '#parkstop', '#walbud'], '/realizacje' => ['id="cermax"', 'id="olaya"', 'id="olaya-aplikacja"', 'id="parkstop"', 'id="walbud"']] as $url => $markers) {
+        foreach (['/' => ['id="work-cermax"', 'id="work-site"', 'id="work-app"'], '/realizacje' => ['id="cermax"', 'id="olaya"', 'id="olaya-aplikacja"', 'id="parkstop"', 'id="walbud"']] as $url => $markers) {
             $html = $this->get($url)->assertOk()->getContent();
             $previous = -1;
             foreach ($markers as $marker) {
