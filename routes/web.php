@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\Route;
 Route::view('/', 'home')->name('home');
 foreach (config('offer') as $name => $service) {
-    Route::view('/uslugi/'.$service['slug'], 'service', ['serviceKey' => $name])->name($name);
+    Route::get('/uslugi/'.$service['slug'], fn () => view('service', ['serviceKey' => $name, 'caseStudies' => \App\Models\Project::published()->whereIn('slug', ['cermax', 'b2b-cermax', 'olaya-strona', 'olaya-aplikacja', 'parkstop', 'walbud24'])->pluck('slug')]))->name($name);
 }
 Route::get('/realizacje', fn () => view('portfolio', ['projects' => \App\Models\Project::published()->orderBy('sort_order')->orderBy('id')->get()]))->name('portfolio');
 Route::get('/realizacje/{slug}', function (string $slug) {

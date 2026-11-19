@@ -39,7 +39,12 @@
     <section class="prose">
         <h2>Przykłady z naszych realizacji</h2>
         @foreach($service['cases'] as $anchor => $label)
-            <p><a class="text-link" href="{{ route('portfolio') }}#{{ $anchor }}">{{ $label }} ↗</a></p>
+            @php
+                $slug = ['olaya' => 'olaya-strona', 'walbud' => 'walbud24'][$anchor] ?? $anchor;
+                if ($slug === 'cermax' && ! $caseStudies->contains($slug) && $caseStudies->contains('b2b-cermax')) $slug = 'b2b-cermax';
+                $caseUrl = $caseStudies->contains($slug) ? route('project', $slug) : route('portfolio').'#'.$anchor;
+            @endphp
+            <p><a class="text-link" href="{{ $caseUrl }}">{{ $label }} ↗</a></p>
         @endforeach
     </section>
     <nav class="prose" aria-label="Powiązane usługi">

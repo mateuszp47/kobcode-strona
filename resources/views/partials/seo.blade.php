@@ -20,6 +20,16 @@
         ];
         $graph[] = ['@type' => 'Service', '@id' => $canonical.'#service', 'name' => $service['name'], 'url' => $canonical, 'description' => $description, 'provider' => ['@id' => $homeUrl.'#organization'], 'areaServed' => ['@type' => 'Country', 'name' => 'Polska']];
     }
+    if (request()->routeIs('project') && isset($project)) {
+        $graph[] = [
+            '@type' => 'BreadcrumbList', '@id' => $canonical.'#breadcrumbs',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Strona główna', 'item' => $homeUrl],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Realizacje', 'item' => \App\Support\Seo::url('realizacje')],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => $project->title, 'item' => $canonical],
+            ],
+        ];
+    }
     $schema = ['@context' => 'https://schema.org', '@graph' => $graph];
 @endphp
 <title>{{ $title }}</title>

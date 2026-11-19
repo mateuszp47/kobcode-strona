@@ -1,10 +1,10 @@
 <section class="compact-case" id="project-{{ $project->slug }}">
-    <span class="eyebrow">{{ $project->category }} · {{ ['own' => 'Projekt własny', 'client' => 'Projekt dla klienta', 'related' => 'Firma powiązana'][$project->relationship] }}</span>
+    <span class="eyebrow">{{ $project->category }} · {{ ['portfolio' => 'Realizacja KOBCODE', 'own' => 'Projekt własny', 'client' => 'Projekt dla klienta', 'related' => 'Firma powiązana'][$project->relationship] }}</span>
     <div>
         <h2>{{ $project->title }}</h2>
         <p class="preserve-lines">{{ $project->summary }}</p>
         @if($project->result)
-            <p class="compact-case-result preserve-lines">{{ $project->result }}</p>
+            <p class="compact-case-result preserve-lines">{{ html_entity_decode(strip_tags($project->result), ENT_QUOTES, 'UTF-8') }}</p>
         @endif
         <a class="text-link" href="{{ route('project', $project->slug) }}">Poznaj realizację {{ $project->title }} <span aria-hidden="true">↗</span></a>
     </div>
