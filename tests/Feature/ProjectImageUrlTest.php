@@ -42,4 +42,17 @@ class ProjectImageUrlTest extends TestCase
         }
         $this->assertSame('/storage/portfolio/Widok%20panelu.webp', ProjectImage::url('portfolio/Widok panelu.webp'));
     }
+    public function test_repeat_import_restores_a_missing_walbud_file_without_changing_the_record(): void
+    {
+        Storage::fake('public');
+        $this->artisan('kobcode:case-studies')->assertSuccessful();
+        $project = \App\Models\Project::where('slug', 'walbud24')->firstOrFail();
+        $before = $project->getAttributes();
+        Storage::disk('public')->delete($project->cover);
+        Storage::disk('public')->assertMissing($project->cover);
+        $this->artisan('kobcode:case-studies')->assertSuccessful();
+        Storage::disk('public')->assertExists($project->cover);
+        $this->assertSame($before, $project->fresh()->getAttributes());
+    }
+
 }

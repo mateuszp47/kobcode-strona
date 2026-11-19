@@ -174,7 +174,7 @@ Opcja `--refresh-media` podmienia wyłącznie rozpoznane zdjęcia Cermax z poprz
 
 ## Poprawka lokalnego ładowania zdjęć (gałąź kobcode-seo-poprawki)
 
-Zdjęcia okładek, galerii i podglądów z lokalnego dysku publicznego korzystają teraz z adresów `/storage/...`. Poprzednio bezwzględne URL pochodziły z `APP_URL`, więc domyślne `http://localhost:8000` kierowało zdjęcia na inny port niż strona otwarta na `http://127.0.0.1:8001`. Poprawka obejmuje również srcset; zdalne dyski zachowują własne adresy. Widoki i dane pozostają bez zmian.
+Zdjęcia okładek, galerii i podglądów z lokalnego dysku publicznego korzystają teraz z adresów `/storage/...`. Poprzednio bezwzględne URL pochodziły z `APP_URL`, więc domyślne `http://localhost:8000` kierowało zdjęcia na inny port niż strona otwarta na `http://127.0.0.1:8001`. Poprawka obejmuje również srcset; zdalne dyski zachowują własne adresy. Ponowne uruchomienie importera odtwarza brakujące pliki wcześniej importowanych materiałów (w tym zdjęcie Walbud), bez nadpisywania istniejących plików i własnych uploadów administratora. Widoki i dane pozostają bez zmian.
 
 Test przeglądarkowy celowo uruchamia aplikację pod innym adresem niż APP_URL, sprawdzając rzeczywiste wczytanie wszystkich obrazów. Dodano regresyjne testy Walbud, galerii i wariantów zdjęć.
 
@@ -190,4 +190,4 @@ php artisan serve --port=8001
 
 Istniejącego poprawnego linku `public/storage` nie trzeba zastępować. Nie używaj `storage:unlink` ani usuwania zdjęć. Jeżeli oryginalny plik dodany samodzielnie przez panel nie istnieje na danym komputerze, trzeba go skopiować do lokalnego `storage/app/public` lub ponownie wybrać w panelu — repozytorium nie zawiera prywatnych uploadów.
 
-Dla tej poprawki nie potrzeba nowego builda ani nowej migracji. Po zainstalowaniu etapu 4 wystarczy aktualizacja `app/Support/` i `resources/views/`, a następnie wyczyszczenie widoków. Konfiguracji hostingu, logowania i produkcyjnego `.env` nie zmieniono.
+Dla tej poprawki nie potrzeba nowego builda ani nowej migracji. Po zainstalowaniu etapu 4 wystarczy aktualizacja `app/Support/`, `app/Console/` i `resources/views/`, a następnie wyczyszczenie widoków. Konfiguracji hostingu, logowania i produkcyjnego `.env` nie zmieniono.

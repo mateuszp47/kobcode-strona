@@ -25,6 +25,12 @@ class ImportCaseStudies extends Command
                     $project->$field = $value;
                 }
             }
+            // Git does not include storage uploads: restore missing managed files on repeat.
+            $usedPaths = array_filter([$project->cover, ...array_column($project->gallery ?? [], 'path')]);
+            foreach ($screenshots as $image) {
+                $expectedPath = 'portfolio/case-studies/'.$slug.'/'.$image['image'].'.webp';
+                if (in_array($expectedPath, $usedPaths, true)) $this->copyScreenshot($slug, $image);
+            }
             // Never change an existing relationship or publication decision implicitly.
             $refreshMedia = $slug === 'cermax' && $this->option('refresh-media');
             if ($refreshMedia && $project->cover && ! $this->isManagedCermaxImage($project->cover)) {
