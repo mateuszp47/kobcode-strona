@@ -34,7 +34,7 @@ class ContentNavigationTest extends TestCase
                 if (isset($url['host']) && $url['host'] !== 'kobcode.test') {
                     continue;
                 }
-                $target = $url['path'] ?? $path;
+                $target = $url['path'] ?? (isset($url['host']) ? '/' : $path);
                 $this->assertArrayHasKey($target, $pages, $path.' links to '.$href);
                 if (! empty($url['fragment'])) {
                     $ids = [];
