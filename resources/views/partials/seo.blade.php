@@ -8,8 +8,17 @@
     if (config('site.email')) $organization['email'] = config('site.email');
     if (config('site.phone')) $organization['telephone'] = config('site.phone');
     $graph = [$organization, ['@type' => 'WebSite', '@id' => $homeUrl.'#website', 'url' => $homeUrl, 'name' => 'KOBCODE', 'inLanguage' => 'pl-PL', 'publisher' => ['@id' => $homeUrl.'#organization']], ['@type' => 'WebPage', '@id' => $canonical.'#webpage', 'url' => $canonical, 'name' => $title, 'description' => $description, 'inLanguage' => 'pl-PL', 'isPartOf' => ['@id' => $homeUrl.'#website']]];
-    if (request()->routeIs('web', 'apps')) {
-        $graph[] = ['@type' => 'Service', '@id' => $canonical.'#service', 'name' => request()->routeIs('web') ? 'Tworzenie stron internetowych' : 'Aplikacje webowe, automatyzacje i integracje', 'url' => $canonical, 'description' => $description, 'provider' => ['@id' => $homeUrl.'#organization'], 'areaServed' => ['@type' => 'Country', 'name' => 'Polska']];
+    $service = config('offer')[request()->route()?->getName()] ?? null;
+    if ($service) {
+        $graph[] = [
+            '@type' => 'BreadcrumbList',
+            '@id' => $canonical.'#breadcrumbs',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Strona główna', 'item' => $homeUrl],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => $service['name'], 'item' => $canonical],
+            ],
+        ];
+        $graph[] = ['@type' => 'Service', '@id' => $canonical.'#service', 'name' => $service['name'], 'url' => $canonical, 'description' => $description, 'provider' => ['@id' => $homeUrl.'#organization'], 'areaServed' => ['@type' => 'Country', 'name' => 'Polska']];
     }
     $schema = ['@context' => 'https://schema.org', '@graph' => $graph];
 @endphp

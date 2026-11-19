@@ -25,7 +25,7 @@ class TechnicalSeoTest extends TestCase
     public function test_all_public_pages_have_valid_unique_metadata_and_one_h1(): void
     {
         $titles = $descriptions = [];
-        foreach (['/', '/kontakt', '/o-firmie', '/realizacje', '/uslugi/strony-internetowe', '/uslugi/aplikacje-internetowe', '/polityka-prywatnosci'] as $path) {
+        foreach (['/', '/kontakt', '/o-firmie', '/realizacje', '/uslugi/strony-internetowe', '/uslugi/aplikacje-internetowe', '/polityka-prywatnosci', '/uslugi/platformy-b2b', '/uslugi/automatyzacja-procesow', '/uslugi/modernizacja-stron-internetowych'] as $path) {
             $html = $this->get($path.'?utm_source=audit')->assertOk()->getContent();
             $dom = new \DOMDocument;
             @$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
@@ -52,18 +52,18 @@ class TechnicalSeoTest extends TestCase
                 $this->assertTrue($image->hasAttribute('alt'));
             }
         }
-        $this->assertCount(7, array_unique($titles));
-        $this->assertCount(7, array_unique($descriptions));
+        $this->assertCount(10, array_unique($titles));
+        $this->assertCount(10, array_unique($descriptions));
         $this->assertSame('https://kobcode.test/kontakt', Seo::url('/kontakt/'));
     }
 
-    public function test_sitemap_lists_all_seven_pages_and_only_approved_projects(): void
+    public function test_sitemap_lists_all_public_pages_and_only_approved_projects(): void
     {
         $project = Project::create(['title' => 'Projekt & firma', 'slug' => 'projekt', 'category' => 'Strona', 'summary' => 'Opis', 'relationship' => 'client', 'approved_for_publication' => true, 'is_published' => true]);
         $project->update(['updated_at' => '2026-11-01 12:00:00']);
         $xml = simplexml_load_string($this->get('/sitemap.xml')->assertOk()->assertHeader('Content-Type', 'application/xml; charset=UTF-8')->getContent());
         $urls = array_map('strval', $xml->xpath('//*[local-name()="loc"]'));
-        $this->assertCount(8, $urls);
+        $this->assertCount(11, array_unique($urls));
         foreach ($urls as $url) {
             $this->get($url)->assertOk();
         }

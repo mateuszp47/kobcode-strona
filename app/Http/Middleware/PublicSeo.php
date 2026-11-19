@@ -22,7 +22,7 @@ class PublicSeo
         // Only normalize successful public GET/HEAD routes; never redirect a form POST or panel request.
         if (app()->environment('production') && config('site.indexable') && $request->isMethodSafe()
             && $response->getStatusCode() === 200
-            && $request->routeIs('home', 'web', 'apps', 'portfolio', 'project', 'about', 'contact', 'privacy', 'robots', 'sitemap')) {
+            && $request->routeIs('home', 'portfolio', 'project', 'about', 'contact', 'privacy', 'robots', 'sitemap', ...array_keys(config('offer')))) {
             $canonical = Seo::url($request->path());
             $requestedPath = parse_url($request->getRequestUri(), PHP_URL_PATH);
             if ($request->getHost() !== parse_url($canonical, PHP_URL_HOST)

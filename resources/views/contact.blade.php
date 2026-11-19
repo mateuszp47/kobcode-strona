@@ -2,7 +2,7 @@
 @section('title', 'Kontakt — porozmawiajmy o oprogramowaniu | KOBCODE')
 @section('description', 'Opisz potrzeby swojej firmy. Porozmawiajmy o aplikacji webowej, automatyzacji, integracji lub stronie internetowej i ustalmy zakres projektu.')
 @section('content')
-<section class="wrap section page"><span class="eyebrow">KONTAKT</span><h1>Twój projekt<br><span>zaczyna się tutaj.</span></h1><p class="lead">Potrzebujesz aplikacji webowej, automatyzacji, integracji lub strony internetowej? Napisz, czym zajmuje się Twoja firma i co chcesz stworzyć lub usprawnić.</p>
+<section class="wrap section page"><span class="eyebrow">KONTAKT</span><h1>Kontakt i wycena projektu</h1><p class="lead">Napisz, czym zajmuje się Twoja firma i co ma się zmienić po wdrożeniu. Jeśli planujesz przebudowę strony, podaj jej adres. Jeśli potrzebujesz aplikacji, opisz jedno zadanie, które ma ułatwić.</p>
 <div class="contact-layout"><aside class="contact-aside"><span class="eyebrow">NA POCZĄTEK WYSTARCZY</span><h2>Kilka słów<br>o Twojej firmie.</h2><ol><li>Co oferujesz i kto jest Twoim odbiorcą?</li><li>Co ma ułatwić strona lub aplikacja?</li><li>Co jest dla Ciebie najważniejsze na start?</li></ol><p>Nie potrzebujesz gotowej specyfikacji. Ustalimy szczegóły podczas rozmowy.</p>
 @if(config('site.email'))<a class="text-link" href="mailto:{{ config('site.email') }}">{{ config('site.email') }} ↗</a>@endif
 @if(config('site.phone'))<a class="text-link" href="tel:{{ preg_replace('/[^+0-9]/', '', config('site.phone')) }}">{{ config('site.phone') }}</a>@endif
