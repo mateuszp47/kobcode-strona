@@ -64,7 +64,7 @@ class CaseStudyTest extends TestCase
             $portfolio->assertSee('href="https://kobcode.test'.$path.'"', false);
             foreach ($project->service_links as $name) {
                 $this->assertStringContainsString('href="'.route($name).'"', $html);
-                $this->get(route($name))->assertOk()->assertSee('href="https://kobcode.test'.$path.'"', false);
+                $this->get(route($name))->assertOk();
             }
             foreach ($xpath->query('//article//img') as $image) {
                 $this->assertNotEmpty($image->getAttribute('alt'));
@@ -75,6 +75,9 @@ class CaseStudyTest extends TestCase
             $this->assertStringContainsString('href="'.route('contact').'"', $html);
             $this->get('https://kobcode.test/sitemap.xml')->assertSee('https://kobcode.test'.$path, false);
         }
+        $this->get('https://kobcode.test/uslugi/platformy-b2b')->assertSee('/realizacje/cermax');
+        $this->get('https://kobcode.test/uslugi/aplikacje-internetowe')->assertSee('/realizacje/olaya-aplikacja');
+        $this->get('https://kobcode.test/uslugi/strony-internetowe')->assertSee('/realizacje/walbud24')->assertSee('/realizacje/parkstop')->assertSee('/realizacje/olaya-strona');
         $this->assertCount(5, array_unique($titles));
         $this->assertCount(5, array_unique($descriptions));
         $this->get('https://kobcode.test/realizacje/olaya-aplikacja')->assertSee('dane demonstracyjne');
@@ -113,7 +116,7 @@ class CaseStudyTest extends TestCase
         Livewire::test(CreateProject::class)->fillForm([
             'title' => 'Nowa realizacja', 'slug' => 'nowa-realizacja', 'category' => 'Aplikacja', 'summary' => 'Opis projektu', 'relationship' => 'client', 'delivery_status' => 'deployed', 'sort_order' => 10,
             'goal' => '<p>Cel <strong>projektu</strong></p>', 'technologies' => ['Laravel'], 'service_links' => ['apps'],
-            'gallery' => [['path' => 'portfolio/demo.webp', 'alt' => 'Widok demonstracyjny', 'caption' => 'Dane demonstracyjne']],
+            'gallery' => [['path' => ['portfolio/demo.webp'], 'alt' => 'Widok demonstracyjny', 'caption' => 'Dane demonstracyjne']],
             'seo_title' => 'Nowa realizacja — KOBCODE', 'seo_description' => 'Opis nowej realizacji.',
             'approved_for_publication' => true, 'is_published' => false,
         ])->call('create')->assertHasNoFormErrors();

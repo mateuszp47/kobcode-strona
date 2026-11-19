@@ -1,8 +1,10 @@
 <?php
 namespace Tests\Feature;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 class PresentationTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_nationwide_presentation_and_local_service_context(): void
     {
         $this->withoutVite();

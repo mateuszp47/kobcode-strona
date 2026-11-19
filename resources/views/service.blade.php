@@ -1,5 +1,7 @@
 @extends('layout')
-@php($service = config('offer.'.$serviceKey))
+@php
+    $service = config('offer.'.$serviceKey);
+@endphp
 @section('title', $service['title'])
 @section('description', $service['description'])
 @section('content')

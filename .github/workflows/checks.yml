@@ -20,3 +20,34 @@ jobs:
       - run: php artisan view:cache
       - run: php artisan route:list --except-vendor
       - run: npm install --ignore-scripts && npm run build
+      - name: Prepare browser checks
+        run: |
+          npm install --no-save --package-lock=false --ignore-scripts playwright
+          npx playwright install --with-deps chromium
+      - name: Check portfolio on mobile, tablet and desktop
+        env:
+          APP_ENV: testing
+          APP_URL: http://127.0.0.1:8001
+          DB_CONNECTION: sqlite
+          DB_DATABASE: /tmp/kobcode-browser.sqlite
+          CACHE_STORE: file
+          SESSION_DRIVER: file
+          SITE_INDEXABLE: 'true'
+        run: |
+          touch /tmp/kobcode-browser.sqlite
+          php artisan migrate --force
+          php artisan storage:link
+          php artisan kobcode:case-studies --publish
+          php artisan serve --host=127.0.0.1 --port=8001 > /tmp/kobcode-browser.log 2>&1 &
+          for attempt in {1..20}; do
+            if curl -fsS http://127.0.0.1:8001/realizacje > /dev/null; then break; fi
+            sleep 1
+          done
+          node tests/browser/case-studies.mjs
+      - name: Save portfolio screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-responsive-screenshots
+          path: browser-results/
+          if-no-files-found: ignore
