@@ -9,7 +9,10 @@
     <p>{{ $project->category }} · {{ ['portfolio' => 'Realizacja KOBCODE', 'own' => 'Projekt własny', 'client' => 'Projekt dla klienta', 'related' => 'Projekt dla firmy powiązanej'][$project->relationship] }} · {{ ['deployed' => 'Wdrożony', 'in_development' => 'W rozwoju', 'unverified' => 'Status wdrożenia do potwierdzenia'][$project->delivery_status] ?? 'Status wdrożenia do potwierdzenia' }}</p>
     @if($project->cover)
         @php($dimensions = \App\Support\ProjectImage::dimensions($project->cover))
-        <img class="project-cover" src="{{ Storage::disk('public')->url($project->cover) }}" alt="{{ $project->cover_alt ?: $project->title }}" @if($dimensions) width="{{ $dimensions['width'] }}" height="{{ $dimensions['height'] }}" @endif fetchpriority="high" decoding="async">
+        <img class="project-cover" src="{{ Storage::disk('public')->url($project->cover) }}" alt="{{ $project->cover_alt ?: $project->title }}" @if($srcset = \App\Support\ProjectImage::srcset($project->cover)) srcset="{{ $srcset }}" sizes="(max-width: 760px) 88vw, 1280px" @endif @if($dimensions) width="{{ $dimensions['width'] }}" height="{{ $dimensions['height'] }}" @endif fetchpriority="high" decoding="async">
+    @endif
+    @if(in_array($project->slug, ['cermax', 'b2b-cermax', 'olaya-aplikacja'], true))
+        @include('partials.demo-notice')
     @endif
     <div class="prose">
         @foreach(['goal'=>'Cel projektu','problem'=>'Potrzeba biznesowa','scope'=>'Zakres naszej pracy','solution'=>'Jak działa rozwiązanie','result'=>'Rezultat'] as $field=>$label)
@@ -25,7 +28,7 @@
                 @foreach($project->gallery as $image)
                     @if(!empty($image['path']))
                         @php($dimensions = \App\Support\ProjectImage::dimensions($image['path']))
-                        <figure><div class="screenshot-frame"><img src="{{ Storage::disk('public')->url($image['path']) }}" alt="{{ $image['alt'] ?? $project->title }}" @if($dimensions) width="{{ $dimensions['width'] }}" height="{{ $dimensions['height'] }}" @endif loading="lazy" decoding="async"></div>@if(!empty($image['caption']))<figcaption>{{ $image['caption'] }}</figcaption>@endif</figure>
+                        <figure><div class="screenshot-frame"><img src="{{ Storage::disk('public')->url($image['path']) }}" alt="{{ $image['alt'] ?? $project->title }}" @if($srcset = \App\Support\ProjectImage::srcset($image['path'])) srcset="{{ $srcset }}" sizes="(max-width: 760px) 88vw, 640px" @endif @if($dimensions) width="{{ $dimensions['width'] }}" height="{{ $dimensions['height'] }}" @endif loading="lazy" decoding="async"></div>@if(!empty($image['caption']))<figcaption>{{ $image['caption'] }}</figcaption>@endif</figure>
                     @endif
                 @endforeach
             </div>

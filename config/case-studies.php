@@ -16,9 +16,11 @@ return [
         'seo_description' => 'Realizacja KOBCODE: Cermax B2B. Publiczny katalog, wyszukiwanie po nazwie, SKU i EAN oraz konto firmowe z cenami i zamówieniami hurtowymi.',
         'technologies' => [], 'service_links' => ['b2b', 'web'],
         'screenshots' => [
-            ['image' => 'cermax-home', 'alt' => 'Cermax — publiczna strona główna oferty hurtowej', 'caption' => 'Publiczna prezentacja oferty i przejście do współpracy B2B.'],
-            ['image' => 'cermax-catalog', 'alt' => 'Cermax — katalog serii z kategoriami i wyszukiwaniem po nazwie, SKU lub EAN', 'caption' => 'Katalog dostępny bez logowania.'],
-            ['image' => 'cermax-b2b', 'alt' => 'Cermax — publiczna prezentacja zasad współpracy B2B', 'caption' => 'Informacje o koncie firmowym i zakupach. Widok publiczny, bez danych kontrahentów.'],
+            ['image' => 'cermax-panel-start', 'alt' => 'Cermax — pulpit panelu B2B z ostatnimi zamówieniami; dane demonstracyjne', 'caption' => 'Panel B2B — dane demonstracyjne.'],
+            ['image' => 'cermax-panel-products', 'alt' => 'Cermax — serie produktów, SKU, parametry, stany i ceny; dane demonstracyjne', 'caption' => 'Produkty i serie — dane demonstracyjne.'],
+            ['image' => 'cermax-panel-orders', 'alt' => 'Cermax — lista zamówień z filtrami statusów i płatności; dane demonstracyjne', 'caption' => 'Zamówienia B2B — dane demonstracyjne.'],
+            ['image' => 'cermax-panel-clients', 'alt' => 'Cermax — konta klientów, opiekunowie i cenniki; dane demonstracyjne', 'caption' => 'Klienci i warunki handlowe — dane demonstracyjne.'],
+            ['image' => 'cermax-panel-reports', 'alt' => 'Cermax — raport wartości zamówień klientów; dane demonstracyjne', 'caption' => 'Raporty — dane demonstracyjne.'],
         ],
     ],
     'olaya-strona' => [

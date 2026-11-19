@@ -9,7 +9,7 @@ class ScreenshotPresentationTest extends TestCase
     {
         $this->withoutVite();
         $response = $this->get('/realizacje')->assertOk();
-        foreach (['cermax-home','cermax-catalog','cermax-b2b','olaya-home','olaya-catalog','olaya-projects','olaya-app-sales','olaya-app-warehouse','olaya-app-invoices','parkstop-home','walbud-home'] as $image) {
+        foreach (['cermax-panel-start','cermax-panel-products','cermax-panel-orders','cermax-panel-clients','cermax-panel-reports','olaya-home','olaya-catalog','olaya-projects','olaya-app-sales','olaya-app-warehouse','olaya-app-invoices','parkstop-home','walbud-home'] as $image) {
             $response->assertSee($image.'-800.webp')->assertSee($image.'-1600.webp');
             $this->assertFileExists(public_path('images/portfolio/'.$image.'-800.webp'));
             $this->assertFileExists(public_path('images/portfolio/'.$image.'-1600.webp'));

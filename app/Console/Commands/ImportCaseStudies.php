@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ImportCaseStudies extends Command
 {
-    protected $signature = 'kobcode:case-studies {--publish : Zatwierdź i opublikuj pięć przygotowanych opisów po ich sprawdzeniu}';
+    protected $signature = 'kobcode:case-studies {--publish : Zatwierdź i opublikuj pięć przygotowanych opisów po ich sprawdzeniu} {--refresh-media : Podmień wcześniejsze zdjęcia Cermax pochodzące z importera}';
     protected $description = 'Uzupełnia puste pola opisów portfolio; domyślnie nowe wpisy są szkicami, bez nadpisywania istniejących treści';
 
     public function handle(): int
@@ -26,14 +26,20 @@ class ImportCaseStudies extends Command
                 }
             }
             // Never change an existing relationship or publication decision implicitly.
-            if (! $project->cover) {
+            $refreshMedia = $slug === 'cermax' && $this->option('refresh-media');
+            if ($refreshMedia && $project->cover && ! $this->isManagedCermaxImage($project->cover)) {
+                $this->warn('Cermax: własną okładkę zachowano; nowy zrzut można wybrać w panelu.');
+            }
+            if (! $project->cover || ($refreshMedia && $this->isManagedCermaxImage($project->cover))) {
                 $cover = $this->copyScreenshot($slug, $screenshots[0]);
                 if ($cover) {
                     $project->cover = $cover['path'];
-                    $project->cover_alt = $project->cover_alt ?: $cover['alt'];
+                    $project->cover_alt = $refreshMedia ? $cover['alt'] : ($project->cover_alt ?: $cover['alt']);
                 }
             }
-            if (! $project->gallery && count($screenshots) > 1) {
+            $managedGallery = collect($project->gallery ?? [])->every(fn (array $image) => $this->isManagedCermaxImage($image['path'] ?? ''));
+            if ($refreshMedia && $project->gallery && ! $managedGallery) $this->warn('Cermax: własną galerię zachowano; nowe zrzuty można wybrać w panelu.');
+            if ((! $project->gallery || ($refreshMedia && $managedGallery)) && count($screenshots) > 1) {
                 $project->gallery = array_values(array_filter(array_map(
                     fn (array $image) => $this->copyScreenshot($slug, $image), array_slice($screenshots, 1)
                 )));
@@ -57,23 +63,37 @@ class ImportCaseStudies extends Command
 
     private function copyScreenshot(string $slug, array $image): ?array
     {
-        $source = public_path('images/portfolio/'.$image['image'].'-1600.webp');
+        $width = is_file(public_path('images/portfolio/'.$image['image'].'-2047.webp')) ? 2047 : 1600;
+        $source = public_path('images/portfolio/'.$image['image'].'-'.$width.'.webp');
         if (! is_file($source)) {
             $this->warn('Brak materiału: '.$image['image'].' — pominięto zdjęcie.');
             return null;
         }
         $path = 'portfolio/case-studies/'.$slug.'/'.$image['image'].'.webp';
-        $disk = Storage::disk('public');
-        if (! $disk->exists($path)) {
-            $stream = fopen($source, 'rb');
-            try {
-                if (! $disk->put($path, $stream)) {
-                    throw new \RuntimeException('Nie zapisano zdjęcia: '.$path);
-                }
-            } finally {
-                if (is_resource($stream)) fclose($stream);
+        $this->copyFile($source, $path);
+        if ($width === 2047) {
+            foreach ([800, 1600] as $variant) {
+                $variantSource = public_path('images/portfolio/'.$image['image'].'-'.$variant.'.webp');
+                if (is_file($variantSource)) $this->copyFile($variantSource, substr($path, 0, -5).'-'.$variant.'.webp');
             }
         }
         return ['path' => $path, 'alt' => $image['alt'], 'caption' => $image['caption']];
     }
+    private function isManagedCermaxImage(string $path): bool
+    {
+        return (bool) preg_match('~^portfolio/case-studies/cermax/cermax-(home|catalog|b2b|panel-(start|products|orders|clients|reports))\.webp$~', $path);
+    }
+
+    private function copyFile(string $source, string $path): void
+    {
+        $disk = Storage::disk('public');
+        if ($disk->exists($path)) return;
+        $stream = fopen($source, 'rb');
+        try {
+            if (! $disk->put($path, $stream)) throw new \RuntimeException('Nie zapisano zdjęcia: '.$path);
+        } finally {
+            if (is_resource($stream)) fclose($stream);
+        }
+    }
+
 }

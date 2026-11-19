@@ -142,4 +142,35 @@ class CaseStudyTest extends TestCase
         $this->assertNull($project->fresh()->gallery);
         $this->get('https://kobcode.test/realizacje/starszy-wpis')->assertOk();
     }
+    public function test_approved_cermax_screenshots_are_lossless_native_size_and_labelled_as_demo(): void
+    {
+        $this->artisan('kobcode:case-studies', ['--publish' => true])->assertSuccessful();
+        $project = Project::where('slug', 'cermax')->firstOrFail();
+        $this->assertCount(4, $project->gallery);
+        $this->assertSame(2047, \App\Support\ProjectImage::dimensions($project->cover)['width']);
+        $this->get('https://kobcode.test/realizacje/cermax')->assertOk()->assertSee('Na zrzutach przedstawiono dane demonstracyjne.')->assertSee('2047w')->assertSee('800w');
+        $this->get('https://kobcode.test/realizacje/olaya-aplikacja')->assertOk()->assertSee('Na zrzutach przedstawiono dane demonstracyjne.');
+        $this->get('https://kobcode.test/')->assertOk()->assertSee('cermax-panel-start-2047.webp')->assertSee('Na zrzutach przedstawiono dane demonstracyjne.');
+        foreach ($project->gallery as $image) {
+            $this->assertStringContainsString('demonstracyjne', $image['caption']);
+            $this->assertSame(2047, \App\Support\ProjectImage::dimensions($image['path'])['width']);
+        }
+    }
+
+    public function test_media_refresh_updates_old_imports_but_preserves_custom_media_and_copy(): void
+    {
+        $this->artisan('kobcode:case-studies')->assertSuccessful();
+        $project = Project::where('slug', 'cermax')->firstOrFail();
+        $project->update(['summary' => 'Własny opis', 'cover' => 'portfolio/case-studies/cermax/cermax-home.webp', 'gallery' => [['path' => 'portfolio/case-studies/cermax/cermax-catalog.webp', 'alt' => 'Stary katalog']]]);
+        $this->artisan('kobcode:case-studies', ['--refresh-media' => true])->assertSuccessful();
+        $this->assertStringContainsString('cermax-panel-start.webp', $project->fresh()->cover);
+        $this->assertSame('Własny opis', $project->fresh()->summary);
+        $this->assertFalse($project->fresh()->is_published);
+        $this->assertCount(4, $project->fresh()->gallery);
+        $project->update(['cover' => 'portfolio/custom.webp', 'gallery' => [['path' => 'portfolio/custom.webp', 'alt' => 'Własny obraz']]]);
+        $this->artisan('kobcode:case-studies', ['--refresh-media' => true])->assertSuccessful();
+        $this->assertSame('portfolio/custom.webp', $project->fresh()->cover);
+        $this->assertSame('Własny obraz', $project->fresh()->gallery[0]['alt']);
+    }
+
 }

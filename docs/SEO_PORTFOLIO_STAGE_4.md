@@ -56,7 +56,7 @@ Jeżeli istnieje historyczny wpis `b2b-cermax`, importer wykorzystuje go i zacho
 
 ## Weryfikacja
 
-Zestaw Laravel/Livewire: **30 testów, 1025 asercji, wszystkie zakończone powodzeniem**. Kontrola Chromium: **18 wariantów widoków (6 adresów × 3 szerokości), wszystkie poprawne**, wraz z kontrolą menu mobilnego. Build Vite, cache widoków i lista tras również przeszły. Laravel, Livewire, kompilacja Blade oraz lista tras są sprawdzane na PHP 8.4 w GitHub Actions; środowisko edycji nie ma lokalnego PHP/Composera. Build Vite wykonano także lokalnie. Testy obejmują szkice, publikację, powtarzalny import, zachowanie własnych danych, historyczny slug, bezpieczeństwo HTML, stare rekordy po migracji, nowe pola panelu, meta/canonical, JSON-LD, obrazy, mapę i linki. Wcześniejsze testy formularza, panelu i SEO pozostają częścią zestawu.
+Podstawowa wersja etapu 4: **30 testów Laravel/Livewire, 1025 asercji, wszystkie zakończone powodzeniem**. Wynik kolejnej aktualizacji zdjęć podano w PR. Kontrola Chromium: **18 wariantów widoków (6 adresów × 3 szerokości), wszystkie poprawne**, wraz z kontrolą menu mobilnego. Build Vite, cache widoków i lista tras również przeszły. Laravel, Livewire, kompilacja Blade oraz lista tras są sprawdzane na PHP 8.4 w GitHub Actions; środowisko edycji nie ma lokalnego PHP/Composera. Build Vite wykonano także lokalnie. Testy obejmują szkice, publikację, powtarzalny import, zachowanie własnych danych, historyczny slug, bezpieczeństwo HTML, stare rekordy po migracji, nowe pola panelu, meta/canonical, JSON-LD, obrazy, mapę i linki. Wcześniejsze testy formularza, panelu i SEO pozostają częścią zestawu.
 
 Dodatkowy test Chromium używa wyłącznie tymczasowej bazy SQLite w CI. Sprawdza zbiorcze portfolio i pięć szczegółów przy szerokościach 390, 768 i 1440 px: odpowiedzi HTTP, jeden H1, załadowane obrazy, poziome przepełnienie, CTA, menu mobilne i błędy JS. Zrzuty Cermax oraz aplikacji Olaya są zapisywane jako artefakt workflow. Nie są to wyniki CWV ani test na fizycznym telefonie. Testy SQLite nie zastępują próby migracji na kopii produkcyjnej bazy MariaDB.
 
@@ -149,3 +149,25 @@ Sprawdź `/realizacje`, pięć adresów szczegółów, dotychczasowy `/realizacj
 ### Powrót do poprzedniej wersji
 
 Przywróć kopie katalogów kodu i poprzedni `public/build/manifest.json` wraz z jego zasobami. Wyczyść config i widoki, odtwórz `view:cache`. Pozostaw nowe opcjonalne kolumny, aby nie utracić ich zawartości. Jeżeli chcesz cofnąć także publikację/treści, użyj panelu albo kontrolowanej kopii bazy — nie stosuj `migrate:fresh`, `db:wipe` ani rollbacku usuwającego kolumny. Nie usuwaj z dysku zdjęć, które mogą być nadal używane przez wpisy.
+
+
+## Aktualizacja zrzutów Cermax i podpisów danych demonstracyjnych
+
+Przesłane przez właściciela pięć oryginalnych zrzutów zastępuje podglądy publicznego serwisu Cermax: pulpit, produkty, zamówienia, klienci i raporty. Największe pliki mają oryginalne 2047 px szerokości i bezstratny WebP; zgodność pikseli z PNG sprawdzono przy konwersji. Przygotowano także warianty 800/1600 px i srcset, bez wyostrzania, powiększania lub zmiany zawartości ekranu. Oryginały WebP zajmują około 99–158 kB każdy.
+
+Na głównej, w portfolio oraz szczegółach Cermax i aplikacji Olaya widnieje podpis: „Na zrzutach przedstawiono dane demonstracyjne. Nazwy, kwoty i pozostałe informacje służą prezentacji działania systemu.” Podpisy galerii Cermax opisują rzeczywiście pokazany ekran, a nie wcześniejszą publiczną stronę.
+
+Dodatkowe pliki: `public/images/portfolio/cermax-panel-*.webp`, `resources/views/partials/demo-notice.blade.php`. Zmieniono także `home.blade.php`, `partials/project-screenshot.blade.php`, `app/Support/ProjectImage.php` i testy zdjęć. Nie dodano kolejnej migracji ani zależności.
+
+Przy aktualizacji istniejącego etapu 4 do listy transferu dodaj cały `public/images/portfolio/` → `/public_html/kobcode.com/public/images/portfolio/`, zachowując inne zdjęcia. Aktualizuj `resources/views/`, `app/Console/`, `app/Support/`, `config/` oraz nowy lokalny `public/build/`. Nie nadpisuj całego `storage`.
+
+Po transferze i czyszczeniu konfiguracji można odświeżyć wcześniej importowane zdjęcia:
+
+```bash
+/usr/local/php84-fpm/bin/php artisan config:clear
+/usr/local/php84-fpm/bin/php artisan kobcode:case-studies --refresh-media
+/usr/local/php84-fpm/bin/php artisan view:clear
+/usr/local/php84-fpm/bin/php artisan view:cache
+```
+
+Opcja `--refresh-media` podmienia wyłącznie rozpoznane zdjęcia Cermax z poprzedniego importu, bez zmiany opisów lub publikacji. Zachowuje własne zdjęcia i galerie administratora; w takim przypadku wypisuje komunikat, a nowe materiały można ustawić w panelu. Nowe rekordy nadal powstają jako szkice. Na lokalnej bazie użyj analogicznie `php artisan kobcode:case-studies --refresh-media`, a następnie `php artisan serve --port=8001`.
