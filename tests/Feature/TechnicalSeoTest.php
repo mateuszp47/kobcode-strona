@@ -96,13 +96,17 @@ class TechnicalSeoTest extends TestCase
     {
         $this->app['env'] = 'production';
         $this->get('https://www.kobcode.test/kontakt?utm_source=test')->assertRedirect('https://kobcode.test/kontakt?utm_source=test')->assertStatus(301);
-        $this->get('https://kobcode.test/kontakt/')->assertRedirect('https://kobcode.test/kontakt')->assertStatus(301);
+        // Laravel's HTTP test helper trims trailing slashes before creating a request.
+        $trailing = Request::create('https://kobcode.test/kontakt/');
+        $trailing->setRouteResolver(fn () => (new \Illuminate\Routing\Route('GET', 'kontakt', fn () => 'OK'))->name('contact'));
+        $redirect = (new PublicSeo)->handle($trailing, fn () => response('OK'));
+        $this->assertSame(301, $redirect->getStatusCode());
+        $this->assertSame('https://kobcode.test/kontakt', $redirect->headers->get('Location'));
         $this->get('https://kobcode.test/kontakt')->assertOk();
         $this->head('https://www.kobcode.test/o-firmie')->assertStatus(301);
         // Simulate LH's internal /public rewrite while Laravel resolves the actual public route.
-        $request = Request::create('https://kobcode.test/public/kontakt?source=test');
+        $request = Request::create('https://kobcode.test/public/kontakt?source=test', 'GET', [], [], [], ['SCRIPT_NAME' => '/public/index.php', 'SCRIPT_FILENAME' => '/var/www/public/index.php', 'PHP_SELF' => '/public/index.php']);
         $request->setRouteResolver(fn () => (new \Illuminate\Routing\Route('GET', 'kontakt', fn () => 'OK'))->name('contact'));
-        $request->server->set('SCRIPT_NAME', '/public/index.php');
         $response = (new PublicSeo)->handle($request, fn () => response('OK'));
         $this->assertSame(301, $response->getStatusCode());
         $this->assertSame('https://kobcode.test/kontakt?source=test', $response->headers->get('Location'));
@@ -118,6 +122,6 @@ class TechnicalSeoTest extends TestCase
         $this->get('/does-not-exist')->assertNotFound()->assertHeader('X-Robots-Tag', 'noindex, nofollow');
         $this->get('/up')->assertOk()->assertHeader('X-Robots-Tag', 'noindex, nofollow');
         $this->get('/admin/login')->assertOk()->assertHeader('X-Robots-Tag', 'noindex, nofollow');
-        $this->post('https://www.kobcode.test/kontakt', [])->assertStatus(503);
+        $this->post('https://www.kobcode.test/kontakt', [])->assertStatus(419)->assertHeaderMissing('Location');
     }
 }
