@@ -171,3 +171,23 @@ Po transferze i czyszczeniu konfiguracji można odświeżyć wcześniej importow
 ```
 
 Opcja `--refresh-media` podmienia wyłącznie rozpoznane zdjęcia Cermax z poprzedniego importu, bez zmiany opisów lub publikacji. Zachowuje własne zdjęcia i galerie administratora; w takim przypadku wypisuje komunikat, a nowe materiały można ustawić w panelu. Nowe rekordy nadal powstają jako szkice. Na lokalnej bazie użyj analogicznie `php artisan kobcode:case-studies --refresh-media`, a następnie `php artisan serve --port=8001`.
+
+## Poprawka lokalnego ładowania zdjęć (gałąź kobcode-seo-poprawki)
+
+Zdjęcia okładek, galerii i podglądów z lokalnego dysku publicznego korzystają teraz z adresów `/storage/...`. Poprzednio bezwzględne URL pochodziły z `APP_URL`, więc domyślne `http://localhost:8000` kierowało zdjęcia na inny port niż strona otwarta na `http://127.0.0.1:8001`. Poprawka obejmuje również srcset; zdalne dyski zachowują własne adresy. Widoki i dane pozostają bez zmian.
+
+Test przeglądarkowy celowo uruchamia aplikację pod innym adresem niż APP_URL, sprawdzając rzeczywiste wczytanie wszystkich obrazów. Dodano regresyjne testy Walbud, galerii i wariantów zdjęć.
+
+Po pobraniu kodu lokalnie:
+
+```bash
+php artisan config:clear
+php artisan storage:link
+php artisan kobcode:case-studies --refresh-media
+php artisan view:clear
+php artisan serve --port=8001
+```
+
+Istniejącego poprawnego linku `public/storage` nie trzeba zastępować. Nie używaj `storage:unlink` ani usuwania zdjęć. Jeżeli oryginalny plik dodany samodzielnie przez panel nie istnieje na danym komputerze, trzeba go skopiować do lokalnego `storage/app/public` lub ponownie wybrać w panelu — repozytorium nie zawiera prywatnych uploadów.
+
+Dla tej poprawki nie potrzeba nowego builda ani nowej migracji. Po zainstalowaniu etapu 4 wystarczy aktualizacja `app/Support/` i `resources/views/`, a następnie wyczyszczenie widoków. Konfiguracji hostingu, logowania i produkcyjnego `.env` nie zmieniono.

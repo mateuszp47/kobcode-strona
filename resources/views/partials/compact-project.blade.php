@@ -13,7 +13,7 @@
             <figure class="screenshot-frame">
                 <figcaption class="screenshot-chrome"><span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>{{ $project->title }}</span></figcaption>
                 @php($dimensions = \App\Support\ProjectImage::dimensions($project->cover))
-                <img src="{{ Storage::disk('public')->url($project->cover) }}" alt="{{ $project->cover_alt ?: $project->title }}" @if($dimensions) width="{{ $dimensions['width'] }}" height="{{ $dimensions['height'] }}" @endif loading="lazy" decoding="async">
+                <img src="{{ \App\Support\ProjectImage::url($project->cover) }}" alt="{{ $project->cover_alt ?: $project->title }}" @if($dimensions) width="{{ $dimensions['width'] }}" height="{{ $dimensions['height'] }}" @endif loading="lazy" decoding="async">
             </figure>
         </div>
     @endif

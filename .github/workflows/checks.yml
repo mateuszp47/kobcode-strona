@@ -27,7 +27,8 @@ jobs:
       - name: Check portfolio on mobile, tablet and desktop
         env:
           APP_ENV: testing
-          APP_URL: http://127.0.0.1:8001
+          # Deliberately differs from the browser host/port to catch broken storage URLs.
+          APP_URL: http://localhost:8000
           DB_CONNECTION: sqlite
           DB_DATABASE: /tmp/kobcode-browser.sqlite
           CACHE_STORE: file

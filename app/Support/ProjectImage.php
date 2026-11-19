@@ -6,6 +6,17 @@ use Illuminate\Support\Facades\Storage;
 
 final class ProjectImage
 {
+    public static function url(string $path): string
+    {
+        // Local images must follow the current host and port, not a stale APP_URL.
+        // Remote disks retain their configured CDN / object-storage URLs.
+        if (config('filesystems.disks.public.driver') === 'local') {
+            return '/storage/'.implode('/', array_map('rawurlencode', explode('/', ltrim($path, '/'))));
+        }
+
+        return Storage::disk('public')->url($path);
+    }
+
     public static function dimensions(?string $cover): ?array
     {
         if (! $cover || config('filesystems.disks.public.driver') !== 'local'
@@ -27,10 +38,10 @@ final class ProjectImage
             if ($width >= $original['width']) continue;
             $variant = substr($path, 0, -5).'-'.$width.'.webp';
             $size = self::dimensions($variant);
-            if ($size) $sources[] = Storage::disk('public')->url($variant).' '.$size['width'].'w';
+            if ($size) $sources[] = self::url($variant).' '.$size['width'].'w';
         }
         if (! $sources) return null;
-        $sources[] = Storage::disk('public')->url($path).' '.$original['width'].'w';
+        $sources[] = self::url($path).' '.$original['width'].'w';
         return implode(', ', $sources);
     }
 
