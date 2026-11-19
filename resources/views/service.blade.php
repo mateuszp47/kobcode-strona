@@ -16,7 +16,7 @@
 
     <div class="steps light">
         @foreach($service['scope'] as $heading => $paragraph)
-            <article>
+            <article @if($serviceKey === 'apps' && $loop->first) id="panele-administracyjne" @endif>
                 <h2>{{ $heading }}</h2>
                 <p>{{ $paragraph }}</p>
             </article>
