@@ -32,13 +32,15 @@ try {
             }));
             assert.ok(dimensions.page <= dimensions.viewport + 1, `${width}: overflow ${path}: ${JSON.stringify(dimensions)}`);
             assert.deepEqual(dimensions.brokenImages, [], `${width}: broken images ${path}`);
+            if (path === '/realizacje/cermax' || path === '/realizacje/olaya-aplikacja') {
+                // Capture before navigation/back restores scroll and browser image paint state.
+                await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+                await page.screenshot({ path: `browser-results/${path.split('/').pop()}-${width}.png`, fullPage: true, animations: 'disabled' });
+            }
             if (path !== '/realizacje') {
                 await page.getByRole('link', { name: /Porozmawiajmy o podobnym rozwiązaniu/ }).click();
                 assert.equal(new URL(page.url()).pathname, '/kontakt');
                 await page.goBack({ waitUntil: 'networkidle' });
-            }
-            if (path === '/realizacje/cermax' || path === '/realizacje/olaya-aplikacja') {
-                await page.screenshot({ path: `browser-results/${path.split('/').pop()}-${width}.png`, fullPage: true });
             }
             console.log(`PASS ${width}px ${path}: HTTP 200, H1, images, no horizontal overflow, CTA`);
         }
