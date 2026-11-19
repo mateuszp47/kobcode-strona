@@ -12,6 +12,8 @@ Rzeczywiste żądania HTTP wykonano z tego środowiska, niezależnie od raportu 
 | /robots.txt | HTTP 200, Allow: /, blokady /admin i /livewire, poprawny adres sitemap |
 | /sitemap.xml | HTTP 500 — ogólny Server Error, bez ujawnionego stosu błędu |
 | /nie-istnieje-audyt-seo | Prawidłowy HTTP 404 |
+| /.env, /vendor/autoload.php | HTTP 403 (HEAD, bez pobierania treści) |
+| /composer.json, /storage/logs/laravel.log | HTTP 404 (HEAD, bez pobierania treści) |
 | http://kobcode.com/kontakt | HTTP 200 bez przekierowania do HTTPS |
 | https://www.kobcode.com/kontakt | HTTP 200 bez przekierowania na domenę główną |
 | /kontakt/ | Przekierowanie do /public/kontakt, następnie HTTP 200 |
@@ -50,7 +52,7 @@ Nie ustawiono publicznego cache dla HTML: sesja i CSRF formularza wymagają zach
 
 ## Testy
 
-Środowisko edycji nie ma PHP i Composera. Zależności PHP z composer.lock, testy Laravel, kompilację Blade i routing wykonuje GitHub Actions (PHP 8.4), oddzielnie od lokalnego buildu npm. Dokładny wynik i link do workflow będą podane w PR. Nie testowano rzeczywistego logowania na produkcji ani nie wysłano formularza produkcyjnego.
+Środowisko edycji nie ma PHP i Composera. Zależności PHP z composer.lock, testy Laravel, kompilację Blade i routing wykonuje GitHub Actions (PHP 8.4), oddzielnie od lokalnego buildu npm. Potwierdzony wynik: 22 testy, 407 asercji — wszystkie zaliczone. Zaliczone również composer install, view:cache, route:list --except-vendor (16 tras) oraz build Vite. Workflow: https://github.com/mateuszp47/kobcode-strona/actions/runs/44489637701. Build CI po instalacji PHP/Filament: CSS 71,84 kB (gzip 16,16 kB), JS 1,53 kB (gzip 0,65 kB); różni się od lokalnego buildu ze względu na dodatkowe źródła wykrywane przez Tailwind po instalacji zależności. Nie testowano rzeczywistego logowania na produkcji ani nie wysłano formularza produkcyjnego. Nie przeprowadzono wizualnego porównania w przeglądarce ani testu na fizycznym telefonie; CSS, JS, układ i animacje pozostały bez zmian.
 
 ## Wdrożenie na LH.pl — dopiero po akceptacji
 
