@@ -2,7 +2,7 @@
 @section('title', $project->seo_title ?: $project->title.' — KOBCODE')
 @section('description', $project->seo_description ?: $project->summary)
 @section('content')
-<article class="wrap section page">
+<article class="wrap section page case-study">
     <nav class="case-breadcrumbs" aria-label="Ścieżka nawigacji"><a href="{{ route('home') }}">Strona główna</a><span aria-hidden="true"> / </span><a href="{{ route('portfolio') }}">Realizacje</a><span aria-hidden="true"> / </span><span aria-current="page">{{ $project->title }}</span></nav>
     <h1>{{ $project->title }}</h1>
     <p class="lead">{{ $project->summary }}</p>
