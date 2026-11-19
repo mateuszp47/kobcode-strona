@@ -18,4 +18,5 @@ jobs:
       - run: cp .env.example .env && php artisan key:generate
       - run: php artisan test
       - run: php artisan view:cache
+      - run: php artisan route:list --except-vendor
       - run: npm install --ignore-scripts && npm run build

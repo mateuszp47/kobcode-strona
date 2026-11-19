@@ -1,6 +1,6 @@
 @extends('layout')
-@section('title', 'Realizacje KOBCODE — Cermax B2B, Olaya, ParkStop i Walbud')
-@section('description', 'Zobacz realizacje KOBCODE: platformę Cermax B2B, stronę i aplikację Olaya, serwis ParkStop oraz katalog Walbud. Poznaj zakres i działanie rozwiązań.')
+@section('title', 'Realizacje — strony internetowe i aplikacje | KOBCODE')
+@section('description', 'Poznaj realizacje KOBCODE: strony internetowe, aplikacje dla firm i platformy B2B. Zobacz zakres naszej pracy, zastosowane rozwiązania i ich działanie.')
 @section('content')
 <section class="wrap section page"><span class="eyebrow">PORTFOLIO / STRONY I APLIKACJE</span><h1>Projekty, za którymi<br><span>stoi nasz kod.</span></h1>
 <p class="lead">Strony internetowe, aplikacje i systemy tworzone dla różnych branż. Zobacz, jak przekładamy potrzeby firm na rozwiązania do prezentacji oferty, obsługi klientów i codziennej pracy.</p>

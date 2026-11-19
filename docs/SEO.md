@@ -16,6 +16,6 @@
 5. Verify ownership in Google Search Console, submit /sitemap.xml, inspect the homepage and service URLs. No Search Console submission or deployment was performed by this change.
 6. Measure field Core Web Vitals on production. Local builds and automated tests do not establish Lighthouse scores, real-user performance or ranking gains.
 
-Privacy is not included in the sitemap; contact enters the sitemap when a contact channel is configured. No city landing pages, keyword stuffing, fabricated performance figures or guaranteed search positions.
+The sitemap includes all seven public pages (including contact and privacy) and approved published CMS projects. Sitemap XML is serialized with DOMDocument rather than compiled Blade. Public canonical URLs have no trailing slash except the homepage. Production-only middleware normalizes the alternate host and public URL paths; HTTPS enforcement remains a hosting/proxy setting. Uploaded project images use their actual dimensions when a local file exists. No city landing pages, keyword stuffing, fabricated performance figures or guaranteed search positions.
 
 Reference: https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
