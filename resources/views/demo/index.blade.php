@@ -1,0 +1,9 @@
+@extends('layout')
+@section('title','Demo aplikacji dla firm — przetestuj system | KOBCODE')
+@section('description','Wypróbuj demonstracyjne aplikacje KOBCODE. Poznaj InstallFlow: klientów, oferty, zlecenia i kalendarz montaży. Bez rejestracji, na fikcyjnych danych.')
+@section('content')
+<section class="wrap section page demo-page"><span class="eyebrow">DEMO APLIKACJI / KOBCODE</span><h1>Zobacz, jak oprogramowanie<br><span>może pracować dla Twojej firmy.</span></h1><p class="lead">Najłatwiej ocenić system, wykonując w nim prawdziwe zadanie. Przygotuj ofertę, zaplanuj montaż i sprawdź pracę zespołu — bez rejestracji, na fikcyjnych danych.</p>
+<article class="demo-showcase">@include('demo.preview')<div class="demo-showcase-copy"><span class="eyebrow">01 / SYSTEM DLA FIRMY USŁUGOWO-MONTAŻOWEJ</span><h2>InstallFlow</h2><p>Od zapytania klienta do zakończonej instalacji. Przykład dedykowanej aplikacji dla firm montujących klimatyzację, pompy ciepła i instalacje.</p><ul><li>Klienci i historia kontaktów</li><li>Oferty z wyceną i przekształceniem w zlecenie</li><li>Kalendarz montaży i przypisanie pracowników</li><li>Raporty wynikające z zapisanych danych</li></ul><div class="demo-actions"><a class="button" href="{{ route('installflow.dashboard') }}">Uruchom demo</a><a class="text-link" href="{{ route('demo.installflow') }}">Poznaj aplikację</a></div><p class="demo-disclaimer">Projekt demonstracyjny KOBCODE. Fikcyjna marka i dane. Każdy odwiedzający pracuje we własnej sesji.</p></div></article>
+<div class="service-brief"><span class="eyebrow">POTRZEBUJESZ INNEGO PROCESU?</span><h2>Demo pokazuje możliwości.<br>Twój system zacznie się od Twojej firmy.</h2><p>Opowiedz, jak obsługujesz klientów, przekazujesz zadania i kontrolujesz terminy. Ustalimy zakres aplikacji dopasowanej do sposobu pracy Twojego zespołu.</p><a class="button" href="{{ route('contact') }}">Zamów podobny system</a></div>
+</section>
+@endsection

@@ -19,13 +19,30 @@ class SeoController extends Controller
     public function sitemap(): Response
     {
         abort_unless(config('site.indexable'), 404);
-        $pages = collect(['home', 'web', 'apps', 'portfolio', 'about'])->map(fn ($name) => ['url' => Seo::url(route($name, [], false))]);
-        if (config('site.contact_enabled') || config('site.email') || config('site.phone')) {
-            $pages->push(['url' => Seo::url(route('contact', [], false))]);
+        $pages = collect(['home', ...array_keys(config('offer')), 'portfolio', 'about', 'contact', 'privacy'])
+            ->map(fn ($name) => ['url' => Seo::url(route($name, [], false))]);
+        if (\App\Demo\InstallFlow\DemoAccess::indexable()) {
+            foreach (['demo.index', 'demo.installflow'] as $name) $pages->push(['url' => Seo::url(route($name, [], false))]);
         }
         foreach (Project::published()->orderBy('id')->cursor() as $project) {
             $pages->push(['url' => Seo::url(route('project', $project->slug, false)), 'modified' => $project->updated_at?->toAtomString()]);
         }
-        return response()->view('sitemap', compact('pages'))->header('Content-Type', 'application/xml; charset=UTF-8');
+        // Serialize XML directly: sitemap delivery must not depend on compiled Blade views.
+        $xml = new \DOMDocument('1.0', 'UTF-8');
+        $urlset = $xml->createElementNS('http://www.sitemaps.org/schemas/sitemap/0.9', 'urlset');
+        $xml->appendChild($urlset);
+        foreach ($pages as $page) {
+            $url = $xml->createElement('url');
+            $urlset->appendChild($url);
+            foreach (['loc' => $page['url'], 'lastmod' => $page['modified'] ?? null] as $tag => $value) {
+                if ($value !== null) {
+                    $element = $xml->createElement($tag);
+                    $element->appendChild($xml->createTextNode($value));
+                    $url->appendChild($element);
+                }
+            }
+        }
+
+        return response($xml->saveXML(), 200, ['Content-Type' => 'application/xml; charset=UTF-8']);
     }
 }

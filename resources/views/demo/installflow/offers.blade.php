@@ -1,0 +1,5 @@
+@extends('demo.installflow.layout')
+@section('content')
+<div class="if-page-heading"><div><span class="if-eyebrow">OD ROZMOWY DO WSPÓŁPRACY</span><h1>Oferty handlowe</h1><p>Przygotuj wycenę, uzgodnij warunki i przekształć ofertę w zlecenie.</p></div><a class="if-button" href="{{ route('installflow.offers.create') }}">@include('demo.installflow.partials.icon',['name'=>'plus','size'=>18]) Nowa oferta</a></div>
+<section class="if-panel"><form class="if-filters" method="get"><label class="if-search">@include('demo.installflow.partials.icon',['name'=>'search'])<input name="q" value="{{ request('q') }}" placeholder="Szukaj oferty lub klienta…" aria-label="Szukaj oferty"></label><select name="status" aria-label="Status oferty"><option value="">Wszystkie statusy</option>@foreach($offerStatuses as $key=>$label)<option value="{{ $key }}" @selected(request('status')===$key)>{{ $label }}</option>@endforeach</select><button class="if-button if-secondary">Filtruj</button><a class="if-text-link" href="{{ route('installflow.offers') }}">Wyczyść</a></form>@include('demo.installflow.partials.offers-table')</section>
+@endsection
