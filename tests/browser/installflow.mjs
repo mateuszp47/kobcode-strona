@@ -91,6 +91,12 @@ try {
             await page.evaluate(() => document.fonts.ready);
             assert.equal(await page.locator('h1').count(), 1, path);
             const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1);
+            if (overflow) {
+                console.log('OVERFLOW', width, path, await page.evaluate(() => [...document.querySelectorAll('body *')].filter(el => {
+                    const rect = el.getBoundingClientRect(); return rect.width && rect.right > innerWidth + 1 && !el.closest('.if-table-wrap');
+                }).slice(0, 15).map(el => ({ tag: el.tagName, class: el.className, width: el.getBoundingClientRect().width, right: el.getBoundingClientRect().right, text: el.textContent.slice(0, 70) }))));
+                await page.screenshot({ path: 'browser-results/installflow-overflow.png', fullPage: true });
+            }
             assert.ok(!overflow, `${width}px horizontal overflow: ${path}`);
             if (path === '/demo/installflow') {
                 assert.match(response.headers()['cache-control'], /no-store/);
