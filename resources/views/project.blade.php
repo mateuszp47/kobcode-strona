@@ -36,9 +36,9 @@
     @endif
     @php($services = collect(config('offer'))->only($project->service_links ?? []))
     @if($services->isNotEmpty())
-        <section class="prose"><h2>Rozwiązania dla Twojej firmy</h2><ul>@foreach($services as $name=>$service)<li><a class="text-link" href="{{ route($name) }}">{{ $service['name'] }} ↗</a></li>@endforeach</ul></section>
+        <section class="prose"><h2>Rozwiązania dla Twojej firmy</h2><ul>@foreach($services as $name=>$service)<li><a class="text-link" href="{{ route($name) }}">{{ $service['name'] }} @include('partials.arrow-up-right')</a></li>@endforeach</ul></section>
     @endif
-    <p><a class="button" href="{{ route('contact') }}">Porozmawiajmy o podobnym rozwiązaniu ↗</a></p>
+    <p><a class="button" href="{{ route('contact') }}">Porozmawiajmy o podobnym rozwiązaniu @include('partials.arrow-up-right')</a></p>
     <p><a class="text-link" href="{{ route('portfolio') }}">← Wszystkie realizacje</a></p>
 </article>
 @endsection

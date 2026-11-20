@@ -6,7 +6,7 @@
         @if($project->result)
             <p class="compact-case-result preserve-lines">{{ html_entity_decode(strip_tags($project->result), ENT_QUOTES, 'UTF-8') }}</p>
         @endif
-        <a class="text-link" href="{{ route('project', $project->slug) }}">Poznaj realizację {{ $project->title }} <span aria-hidden="true">↗</span></a>
+        <a class="text-link" href="{{ route('project', $project->slug) }}">Poznaj realizację {{ $project->title }} <span aria-hidden="true">@include('partials.arrow-up-right')</span></a>
     </div>
     @if($project->cover)
         <div class="compact-case-preview">
