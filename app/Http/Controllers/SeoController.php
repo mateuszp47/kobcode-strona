@@ -21,6 +21,9 @@ class SeoController extends Controller
         abort_unless(config('site.indexable'), 404);
         $pages = collect(['home', ...array_keys(config('offer')), 'portfolio', 'about', 'contact', 'privacy'])
             ->map(fn ($name) => ['url' => Seo::url(route($name, [], false))]);
+        if (\App\Demo\InstallFlow\DemoAccess::indexable()) {
+            foreach (['demo.index', 'demo.installflow'] as $name) $pages->push(['url' => Seo::url(route($name, [], false))]);
+        }
         foreach (Project::published()->orderBy('id')->cursor() as $project) {
             $pages->push(['url' => Seo::url(route('project', $project->slug, false)), 'modified' => $project->updated_at?->toAtomString()]);
         }

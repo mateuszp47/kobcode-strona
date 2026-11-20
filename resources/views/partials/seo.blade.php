@@ -30,11 +30,12 @@
             ],
         ];
     }
+    $pageIndexable = config('site.indexable') && (! request()->routeIs('demo.*') || \App\Demo\InstallFlow\DemoAccess::indexable());
     $schema = ['@context' => 'https://schema.org', '@graph' => $graph];
 @endphp
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $description }}">
-<meta name="robots" content="{{ config('site.indexable') ? 'index,follow,max-image-preview:large' : 'noindex,nofollow' }}">
+<meta name="robots" content="{{ $pageIndexable ? 'index,follow,max-image-preview:large' : 'noindex,nofollow' }}">
 <link rel="canonical" href="{{ $canonical }}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pl_PL">

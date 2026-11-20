@@ -45,6 +45,7 @@ jobs:
             sleep 1
           done
           node tests/browser/case-studies.mjs
+          node tests/browser/installflow.mjs
       - name: Save portfolio screenshots
         if: always()
         uses: actions/upload-artifact@v4

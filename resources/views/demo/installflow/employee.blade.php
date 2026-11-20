@@ -1,0 +1,5 @@
+@extends('demo.installflow.layout')
+@section('content')
+<div class="if-page-heading"><div><span class="if-eyebrow">PROFIL PRACOWNIKA</span><h1>{{ $employee->name }}</h1><p>{{ $employee->role }} · <span class="if-badge if-status-{{ $employee->availability }}">{{ $availability[$employee->availability] }}</span></p></div><a class="if-button" href="{{ route('installflow.employees.edit',$employee->id) }}">Edytuj dane / dostępność</a></div>
+<section class="if-panel if-padded"><dl class="if-details if-horizontal"><div><dt>E-mail demonstracyjny</dt><dd>{{ $employee->email }}</dd></div><div><dt>Telefon demonstracyjny</dt><dd>{{ $employee->phone }}</dd></div><div><dt>Harmonogram</dt><dd><a class="if-text-link" href="{{ route('installflow.calendar',['employee'=>$employee->id]) }}">Kalendarz pracownika</a></dd></div></dl></section><section class="if-panel if-spaced"><div class="if-panel-heading"><h2>Przypisane zlecenia i terminy</h2></div>@include('demo.installflow.partials.orders-table')</section>
+@endsection

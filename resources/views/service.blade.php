@@ -49,6 +49,9 @@
             <p><a class="text-link" href="{{ $caseUrl }}">{{ $label }} ↗</a></p>
         @endforeach
     </section>
+    @if($serviceKey === 'apps' && \App\Demo\InstallFlow\DemoAccess::enabled())
+        <section class="prose"><h2>Zobacz działającą aplikację</h2><p>W InstallFlow możesz utworzyć ofertę, zaplanować montaż i sprawdzić pracę zespołu na fikcyjnych danych.</p><a class="text-link" href="{{ route('demo.installflow') }}">Poznaj demo InstallFlow</a></section>
+    @endif
     <nav class="prose" aria-label="Powiązane usługi">
         <h2>Powiązane usługi</h2>
         @foreach($service['related'] as $name)

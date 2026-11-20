@@ -13,7 +13,9 @@ class PublicSeo
     {
         $response = $next($request);
 
-        if ($response->getStatusCode() >= 400 || $request->is('admin', 'admin/*', 'livewire', 'livewire/*', 'up')) {
+        if ($request->routeIs('installflow.*')) $response->headers->set('Cache-Control', 'private, no-store, max-age=0');
+
+        if ($request->routeIs('installflow.*') || $response->getStatusCode() >= 400 || $request->is('admin', 'admin/*', 'livewire', 'livewire/*', 'up')) {
             $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
 
             return $response;
@@ -22,7 +24,7 @@ class PublicSeo
         // Only normalize successful public GET/HEAD routes; never redirect a form POST or panel request.
         if (app()->environment('production') && config('site.indexable') && $request->isMethodSafe()
             && $response->getStatusCode() === 200
-            && $request->routeIs('home', 'portfolio', 'project', 'about', 'contact', 'privacy', 'robots', 'sitemap', ...array_keys(config('offer')))) {
+            && $request->routeIs('home', 'portfolio', 'project', 'about', 'contact', 'privacy', 'robots', 'sitemap', 'demo.index', 'demo.installflow', ...array_keys(config('offer')))) {
             $canonical = Seo::url($request->path());
             $requestedPath = parse_url($request->getRequestUri(), PHP_URL_PATH);
             if ($request->getHost() !== parse_url($canonical, PHP_URL_HOST)

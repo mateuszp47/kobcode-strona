@@ -17,6 +17,7 @@ class ContentNavigationTest extends TestCase
         foreach (config('offer') as $offer) {
             $paths[] = '/uslugi/'.$offer['slug'];
         }
+        if (\App\Demo\InstallFlow\DemoAccess::enabled()) $paths = [...$paths, '/demo', '/demo/installflow/opis'];
         $pages = [];
         foreach ($paths as $path) {
             $html = $this->get('https://kobcode.test'.$path)->assertOk()->getContent();
@@ -35,6 +36,7 @@ class ContentNavigationTest extends TestCase
                     continue;
                 }
                 $target = $url['path'] ?? (isset($url['host']) ? '/' : $path);
+                if (str_starts_with($target, '/demo/installflow') && $target !== '/demo/installflow/opis') continue;
                 $this->assertArrayHasKey($target, $pages, $path.' links to '.$href);
                 if (! empty($url['fragment'])) {
                     $ids = [];

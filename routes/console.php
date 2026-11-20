@@ -18,3 +18,5 @@ Artisan::command('kobcode:portfolio-drafts', function () {
     $this->call('db:seed', ['--class' => \Database\Seeders\PortfolioDraftSeeder::class]);
     $this->info('Szkice przygotowane. Istniejące opisy nie zostały nadpisane.');
 })->purpose('Dodaj brakujące szkice Walbud i Olaya bez publikowania');
+
+\Illuminate\Support\Facades\Schedule::command('demo:installflow --prune')->hourly()->when(fn () => \App\Demo\InstallFlow\DemoAccess::enabled())->withoutOverlapping();

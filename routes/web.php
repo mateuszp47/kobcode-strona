@@ -16,3 +16,5 @@ Route::view('/polityka-prywatnosci', 'privacy')->name('privacy');
 
 Route::get('/robots.txt', [\App\Http\Controllers\SeoController::class, 'robots'])->name('robots');
 Route::get('/sitemap.xml', [\App\Http\Controllers\SeoController::class, 'sitemap'])->name('sitemap');
+
+require __DIR__.'/demo.php';
