@@ -20,3 +20,6 @@ Artisan::command('kobcode:portfolio-drafts', function () {
 })->purpose('Dodaj brakujące szkice Walbud i Olaya bez publikowania');
 
 \Illuminate\Support\Facades\Schedule::command('demo:installflow --prune')->hourly()->when(fn () => \App\Demo\InstallFlow\DemoAccess::enabled())->withoutOverlapping();
+
+\Illuminate\Support\Facades\Schedule::command('kobcode:deliver-inquiries')->everyMinute()
+    ->when(fn () => (bool) config('services.olaya_crm.enabled'))->withoutOverlapping();

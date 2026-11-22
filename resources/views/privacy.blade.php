@@ -6,7 +6,7 @@
 <span class="eyebrow">KOBCODE / OCHRONA DANYCH</span>
 <h1>Polityka<br><span>prywatności.</span></h1>
 <p class="lead">Poniżej wyjaśniamy, jakie dane przetwarzamy podczas korzystania z kobcode.com, w jakim celu i jak możesz skorzystać ze swoich praw.</p>
-<p>Data aktualizacji: 3 listopada 2026 r.</p>
+<p>Data aktualizacji: 22 listopada 2026 r.</p>
 <div class="prose">
 <section><h2>1. Administrator i kontakt</h2>
 <p>Administratorem danych osobowych jest KOBCODE spółka z ograniczoną odpowiedzialnością, NIP 9482601374, KRS 0000512381. Pełny <a class="text-link" href="#dane-spolki">adres siedziby i dane spółki znajdziesz w stopce</a> na tej samej stronie.</p>
@@ -28,7 +28,7 @@
 <p>Wysłanie zapytania nie oznacza zapisu do newslettera ani zgody na marketing. Nie wymagamy zgody na przetwarzanie danych, jeśli podstawą jest obsługa zapytania lub podjęcie działań przed zawarciem umowy.</p>
 </section>
 <section><h2>4. Formularz i dostęp do zapytań</h2>
-<p>Wiadomość wysłana przez formularz jest zapisywana w bazie danych serwisu i udostępniana upoważnionym osobom w panelu administracyjnym. Formularz nie wysyła automatycznych powiadomień e-mail. Dane wykorzystujemy do obsługi sprawy i dalszego kontaktu.</p>
+<p>Wiadomość wysłana przez formularz jest zapisywana w bazie danych serwisu i udostępniana upoważnionym osobom w panelu administracyjnym. Po włączeniu integracji zapytanie jest również przekazywane zabezpieczonym połączeniem do wykorzystywanego przez KOBCODE panelu OLAYA, do modułu obsługi zapytań sprzedażowych. Dostęp do treści mają upoważnione osoby. W razie chwilowej niedostępności połączenia wiadomość pozostaje zapisana w serwisie, a przekazanie może zostać ponowione. Formularz nie wysyła automatycznych powiadomień e-mail. Dane wykorzystujemy do obsługi sprawy i dalszego kontaktu.</p>
 </section>
 <section><h2>5. Odbiorcy danych i hosting</h2>
 <p>Z usług hostingowych korzystamy w LH.pl sp. z o.o. Dostawca hostingu może przetwarzać dane zapisane w serwisie, logach i kopiach zapasowych w zakresie zapewnienia działania, bezpieczeństwa oraz utrzymania infrastruktury. Dostęp mogą mieć także osoby upoważnione przez KOBCODE i podmioty świadczące obsługę techniczną, w zakresie niezbędnym do powierzonych zadań i na odpowiedniej podstawie prawnej.</p>

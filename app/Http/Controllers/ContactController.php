@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Inquiry;
+use App\Services\OlayaCrmDelivery;
 use Illuminate\Http\Request;
 class ContactController extends Controller {
-    public function store(Request $request) {
+    public function store(Request $request, OlayaCrmDelivery $delivery) {
         abort_unless(config('site.contact_enabled'), 503);
         $data = $request->validate([
             'name'=>['required','string','max:100'], 'email'=>['required','email','max:255'],
@@ -15,7 +15,8 @@ class ContactController extends Controller {
             'message.min'=>'Opis powinien mieć przynajmniej 10 znaków.', 'website.max'=>'Nie udało się przyjąć formularza.',
         ]);
         unset($data['website']);
-        Inquiry::create($data);
+        $inquiry = $delivery->store($data);
+        $delivery->send($inquiry->id);
         return to_route('contact')->with('success', 'Dziękujemy. Twoje zapytanie zostało zapisane i jest dostępne dla zespołu KOBCODE.');
     }
 }
