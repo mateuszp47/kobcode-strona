@@ -20,6 +20,6 @@
 </form>
 @endif
 
-@if(!config('site.contact_enabled'))<div class="contact-unavailable"><span class="eyebrow">KONTAKT</span><h2>Formularz jest<br>obecnie niedostępny.</h2>@if(config('site.email'))<p>Napisz bezpośrednio na podany adres e-mail.</p>@else<p>Dane kontaktowe pojawią się po uruchomieniu tej części serwisu.</p>@endif</div>@endif
+@if(!config('site.contact_enabled'))<div class="contact-unavailable"><span class="eyebrow">KONTAKT</span><h2>Formularz jest<br>obecnie niedostępny.</h2>@if(config('site.email'))<p>Napisz bezpośrednio na podany adres e-mail.</p>@elseif(config('site.phone'))<p>Zadzwoń pod podany numer, aby porozmawiać o projekcie.</p>@else<p>Dane kontaktowe pojawią się po uruchomieniu tej części serwisu.</p>@endif</div>@endif
 </div></div></section>
 @endsection
