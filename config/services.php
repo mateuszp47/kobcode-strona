@@ -2,6 +2,12 @@
 
 return [
 
+    'olaya_crm' => [
+        'enabled' => env('OLAYA_CRM_ENABLED', false),
+        'url' => env('OLAYA_CRM_URL', ''),
+        'key' => env('OLAYA_CRM_API_KEY', ''),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

@@ -3,5 +3,5 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 class Inquiry extends Model {
     protected $fillable = ['name','email','company','phone','message','is_read'];
-    protected function casts(): array { return ['is_read'=>'boolean']; }
+    protected function casts(): array { return ['is_read'=>'boolean', 'olaya_attempts'=>'integer', 'olaya_next_attempt_at'=>'datetime', 'olaya_delivered_at'=>'datetime']; }
 }

@@ -19,6 +19,8 @@ class InquiryResource extends Resource {
             TextInput::make('company')->label('Firma')->disabled(),
             TextInput::make('phone')->label('Telefon')->disabled(),
             Textarea::make('message')->label('Treść')->disabled()->rows(10),
+            TextInput::make('olaya_status')->label('Status przekazania do OLAYA')->formatStateUsing(fn ($state) => ['pending'=>'Oczekuje na przekazanie', 'sent'=>'Przekazano', 'failed'=>'Wymaga sprawdzenia'][$state] ?? 'Nie przekazywano')->disabled(),
+            TextInput::make('olaya_last_error')->label('Kod ostatniego błędu przekazania')->disabled(),
             Toggle::make('is_read')->label('Przeczytane'),
         ]);
     }
@@ -28,6 +30,9 @@ class InquiryResource extends Resource {
             TextColumn::make('name')->label('Imię')->searchable(),
             TextColumn::make('email')->label('E-mail')->searchable(),
             IconColumn::make('is_read')->label('Przeczytane')->boolean(),
+            TextColumn::make('olaya_status')->label('OLAYA')->badge()->placeholder('Nie przekazywano')
+                ->formatStateUsing(fn ($state) => ['pending'=>'Oczekuje', 'sent'=>'Przekazano', 'failed'=>'Sprawdź'][$state] ?? $state)
+                ->color(fn ($state) => match ($state) { 'sent'=>'success', 'failed'=>'danger', default=>'warning' }),
         ])->defaultSort('created_at','desc')->recordActions([EditAction::make()->label('Otwórz'),DeleteAction::make()]);
     }
     public static function getPages(): array {
