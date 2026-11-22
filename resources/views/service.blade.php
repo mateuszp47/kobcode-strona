@@ -1,8 +1,66 @@
 @extends('layout')
-@section('title', ($kind === 'web' ? 'Tworzenie stron internetowych dla firm' : 'Aplikacje webowe, automatyzacje i integracje').' — KOBCODE')
-@section('description', $kind === 'web' ? 'Projektujemy i tworzymy strony internetowe dla firm: serwisy firmowe, katalogi produktów i panele edycji treści. Poznaj zakres współpracy z KOBCODE.' : 'Tworzymy aplikacje webowe na zamówienie, systemy automatyzacji i integracje API. Dopasowujemy widoki, procesy i uprawnienia do potrzeb Twojego zespołu.')
-@section('content')<section class="wrap section page"><span class="eyebrow">USŁUGI / {{ $kind === 'web' ? 'STRONY' : 'APLIKACJE' }}</span><h1>{{ $kind === 'web' ? 'Strony internetowe dla firm.' : 'Aplikacje internetowe dla firm.' }}</h1><p class="lead">{{ $kind === 'web' ? 'Tworzymy strony firmowe oraz serwisy prezentujące produkty i usługi. Porządkujemy ofertę i ułatwiamy kontakt z firmą.' : 'Tworzymy oprogramowanie internetowe odpowiadające na konkretne potrzeby organizacji. Funkcje ustalamy na podstawie zadań wykonywanych przez Twój zespół.' }}</p><div class="steps light">@foreach(($kind === 'web' ? ['Prezentacja oferty' => 'Usługi, produkty i realizacje uporządkowane z myślą o odbiorcy.', 'Wygodny kontakt' => 'Wyraźne przyciski kontaktu i formularze do wysyłania zapytań.', 'Edycja treści' => 'Zakres panelu do edycji ustalamy według tego, co chcesz aktualizować.'] : ['Procesy firmy' => 'Ustalamy, jakie zadania i informacje ma obsługiwać aplikacja.', 'Praca zespołu' => 'Projektujemy widoki i dostęp do funkcji zgodnie z rolami użytkowników.', 'Zakres pierwszej wersji' => 'Zaczynamy od funkcji potrzebnych do osiągnięcia uzgodnionego celu.']) as $title => $text)<article><h2>{{ $title }}</h2><p>{{ $text }}</p></article>@endforeach</div><div class="service-brief"><span class="eyebrow">OD POTRZEBY DO ZAKRESU</span><h2>{{ $kind === 'web' ? 'Co powinna zawierać Twoja strona?' : 'Jakie zadania ma obsługiwać aplikacja?' }}</h2><p>{{ $kind === 'web' ? 'Zaczynamy od uporządkowania oferty i ścieżki użytkownika. Następnie projektujemy widoki na telefon, tablet i komputer oraz ustalamy, które treści chcesz edytować samodzielnie.' : 'Zanim powstanie interfejs, poznajemy proces: kto pracuje z danymi, skąd one pochodzą i co powinno wydarzyć się dalej. Na tej podstawie określamy widoki, działania i uprawnienia.' }}</p><div class="brief-columns"><article><h3>Co przygotować?</h3><p>Opisz firmę, odbiorców i cel. Możesz też pokazać przykłady lub opisać obecny sposób pracy.</p></article><article><h3>Co ustalimy?</h3><p>Ustalamy zakres funkcji, strukturę oraz harmonogram i wycenę dopasowane do projektu.</p></article></div></div>@if($kind !== 'web')
-<section class="service-brief" id="automatyzacje"><span class="eyebrow">SYSTEMY AUTOMATYZACJI</span><h2>Mniej ręcznego wykonywania tych samych zadań.</h2><p>Projektujemy oprogramowanie wykonujące ustalone kroki procesu, na przykład przekazanie danych, zmianę statusu lub przygotowanie powiadomienia. Określamy zdarzenie uruchamiające działanie, reguły i wyjątki oraz etapy wymagające decyzji pracownika.</p></section>
-<section class="service-brief" id="integracje"><span class="eyebrow">INTEGRACJE SYSTEMÓW</span><h2>Dane przekazywane między narzędziami.</h2><p>Łączymy aplikacje i usługi przez dostępne API lub uzgodnione formaty wymiany danych. Ustalamy, skąd pochodzą informacje, w jakim kierunku są przesyłane i jak obsłużyć błędne lub niepełne dane. Możliwości integracji sprawdzamy przed określeniem zakresu.</p></section>
-@endif
-<div class="prose"><h2>Zobacz zastosowanie w naszych realizacjach</h2>@if($kind === 'web')<p><a class="text-link" href="{{ route('portfolio') }}#olaya">Strona i katalog modeli Olaya ↗</a></p><p><a class="text-link" href="{{ route('portfolio') }}#parkstop">Serwis parkingu ParkStop ↗</a></p>@else<p><a class="text-link" href="{{ route('portfolio') }}#cermax">Katalog i platforma zakupowa Cermax B2B ↗</a></p><p><a class="text-link" href="{{ route('portfolio') }}#olaya-aplikacja">Aplikacja Olaya do pracy zespołu ↗</a></p>@endif</div></section>@include('partials.contact-banner')@endsection
+@php
+    $service = config('offer.'.$serviceKey);
+@endphp
+@section('title', $service['title'])
+@section('description', $service['description'])
+@section('content')
+<section class="wrap section page">
+    <nav class="service-crumbs" aria-label="Ścieżka nawigacji">
+        <a href="{{ route('home') }}">Strona główna</a>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page">{{ $service['name'] }}</span>
+    </nav>
+
+    <h1>{{ $service['name'] }}</h1>
+    <p class="lead">{{ $service['lead'] }}</p>
+    <a class="text-link" href="{{ route('contact') }}">Zapytaj o wycenę <span aria-hidden="true">@include('partials.arrow-up-right')</span></a>
+
+    <div class="steps light">
+        @foreach($service['scope'] as $heading => $paragraph)
+            <article @if($serviceKey === 'apps' && $loop->first) id="panele-administracyjne" @endif>
+                <h2>{{ $heading }}</h2>
+                <p>{{ $paragraph }}</p>
+            </article>
+        @endforeach
+    </div>
+
+    <section class="service-brief">
+        <h2>{{ $service['brief'] }}</h2>
+        <p>{{ $service['answer'] }}</p>
+        <div class="brief-columns">
+            @foreach($service['questions'] as $question => $answer)
+                <article>
+                    <h3>{{ $question }}</h3>
+                    <p>{{ $answer }}</p>
+                </article>
+            @endforeach
+        </div>
+    </section>
+
+    <section class="prose">
+        <h2>Przykłady z naszych realizacji</h2>
+        @foreach($service['cases'] as $anchor => $label)
+            @php
+                $slug = ['olaya' => 'olaya-strona', 'walbud' => 'walbud24'][$anchor] ?? $anchor;
+                if ($slug === 'cermax' && ! $caseStudies->contains($slug) && $caseStudies->contains('b2b-cermax')) $slug = 'b2b-cermax';
+                $caseUrl = $caseStudies->contains($slug) ? route('project', $slug) : route('portfolio').'#'.$anchor;
+            @endphp
+            <p><a class="text-link" href="{{ $caseUrl }}">{{ $label }} @include('partials.arrow-up-right')</a></p>
+        @endforeach
+    </section>
+    @if($serviceKey === 'apps' && \App\Demo\InstallFlow\DemoAccess::enabled())
+        <section class="prose"><h2>Zobacz działającą aplikację</h2><p>W InstallFlow możesz utworzyć ofertę, zaplanować montaż i sprawdzić pracę zespołu na fikcyjnych danych.</p><a class="text-link" href="{{ route('demo.installflow') }}">Poznaj demo InstallFlow</a></section>
+    @endif
+    <nav class="prose" aria-label="Powiązane usługi">
+        <h2>Powiązane usługi</h2>
+        @foreach($service['related'] as $name)
+            <p @if($serviceKey === 'apps' && $name === 'automation') id="automatyzacje" @endif>
+                <a class="text-link" @if($serviceKey === 'apps' && $name === 'automation') id="integracje" @endif
+                   href="{{ route($name) }}">{{ config('offer.'.$name.'.name') }} @include('partials.arrow-up-right')</a>
+            </p>
+        @endforeach
+    </nav>
+</section>
+@include('partials.contact-banner')
+@endsection

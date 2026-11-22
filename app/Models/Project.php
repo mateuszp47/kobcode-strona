@@ -5,13 +5,13 @@ use Illuminate\Database\Eloquent\Builder;
 class Project extends Model
 {
     protected $guarded = ['id'];
-    protected function casts(): array { return ['is_published'=>'boolean', 'approved_for_publication'=>'boolean']; }
+    protected function casts(): array { return ['is_published'=>'boolean', 'approved_for_publication'=>'boolean', 'technologies'=>'array', 'gallery'=>'array', 'service_links'=>'array']; }
     public function scopePublished(Builder $query): Builder {
-        return $query->where('is_published', true)->where('approved_for_publication', true)->whereIn('relationship', ['client', 'own', 'related']);
+        return $query->where('is_published', true)->where('approved_for_publication', true)->whereIn('relationship', ['client', 'own', 'related', 'portfolio']);
     }
     protected static function booted(): void {
         static::saving(function (Project $project) {
-            if (! $project->approved_for_publication || ! in_array($project->relationship, ['client','own','related'])) {
+            if (! $project->approved_for_publication || ! in_array($project->relationship, ['client','own','related','portfolio'])) {
                 $project->is_published = false;
             }
         });

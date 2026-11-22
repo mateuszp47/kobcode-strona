@@ -18,7 +18,7 @@ class PortfolioPriorityTest extends TestCase
                 $previous = $position;
             }
             $this->assertStringContainsString('olaya-app-sales-800.webp', $html);
-            $this->assertStringContainsString('cermax-home-800.webp', $html);
+            $this->assertStringContainsString('cermax-panel-start-800.webp', $html);
 
             $this->assertStringNotContainsString('image(6)', $html);
         }

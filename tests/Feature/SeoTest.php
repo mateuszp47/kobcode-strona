@@ -40,7 +40,7 @@ class SeoTest extends TestCase
         $response = $this->get('/sitemap.xml')->assertOk()->assertHeader('Content-Type', 'application/xml; charset=UTF-8');
         $xml = simplexml_load_string($response->getContent());
         $this->assertNotFalse($xml);
-        $response->assertSee('https://example.test/realizacje/publiczny', false)->assertDontSee('/realizacje/szkic')->assertDontSee('/admin')->assertDontSee('<priority>')->assertDontSee('/kontakt');
+        $response->assertSee('https://example.test/realizacje/publiczny', false)->assertDontSee('/realizacje/szkic')->assertDontSee('/admin')->assertDontSee('<priority>')->assertSee('/kontakt')->assertSee('/polityka-prywatnosci');
         $this->get('/robots.txt')->assertOk()->assertSee('Sitemap: https://example.test/sitemap.xml', false);
     }
 

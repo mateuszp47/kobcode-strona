@@ -8,14 +8,34 @@
     if (config('site.email')) $organization['email'] = config('site.email');
     if (config('site.phone')) $organization['telephone'] = config('site.phone');
     $graph = [$organization, ['@type' => 'WebSite', '@id' => $homeUrl.'#website', 'url' => $homeUrl, 'name' => 'KOBCODE', 'inLanguage' => 'pl-PL', 'publisher' => ['@id' => $homeUrl.'#organization']], ['@type' => 'WebPage', '@id' => $canonical.'#webpage', 'url' => $canonical, 'name' => $title, 'description' => $description, 'inLanguage' => 'pl-PL', 'isPartOf' => ['@id' => $homeUrl.'#website']]];
-    if (request()->routeIs('web', 'apps')) {
-        $graph[] = ['@type' => 'Service', '@id' => $canonical.'#service', 'name' => request()->routeIs('web') ? 'Tworzenie stron internetowych' : 'Aplikacje webowe, automatyzacje i integracje', 'url' => $canonical, 'description' => $description, 'provider' => ['@id' => $homeUrl.'#organization'], 'areaServed' => ['@type' => 'Country', 'name' => 'Polska']];
+    $service = config('offer')[request()->route()?->getName()] ?? null;
+    if ($service) {
+        $graph[] = [
+            '@type' => 'BreadcrumbList',
+            '@id' => $canonical.'#breadcrumbs',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Strona główna', 'item' => $homeUrl],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => $service['name'], 'item' => $canonical],
+            ],
+        ];
+        $graph[] = ['@type' => 'Service', '@id' => $canonical.'#service', 'name' => $service['name'], 'url' => $canonical, 'description' => $description, 'provider' => ['@id' => $homeUrl.'#organization'], 'areaServed' => ['@type' => 'Country', 'name' => 'Polska']];
     }
+    if (request()->routeIs('project') && isset($project)) {
+        $graph[] = [
+            '@type' => 'BreadcrumbList', '@id' => $canonical.'#breadcrumbs',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Strona główna', 'item' => $homeUrl],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Realizacje', 'item' => \App\Support\Seo::url('realizacje')],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => $project->title, 'item' => $canonical],
+            ],
+        ];
+    }
+    $pageIndexable = config('site.indexable') && (! request()->routeIs('demo.*') || \App\Demo\InstallFlow\DemoAccess::indexable());
     $schema = ['@context' => 'https://schema.org', '@graph' => $graph];
 @endphp
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $description }}">
-<meta name="robots" content="{{ config('site.indexable') ? 'index,follow,max-image-preview:large' : 'noindex,nofollow' }}">
+<meta name="robots" content="{{ $pageIndexable ? 'index,follow,max-image-preview:large' : 'noindex,nofollow' }}">
 <link rel="canonical" href="{{ $canonical }}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pl_PL">
